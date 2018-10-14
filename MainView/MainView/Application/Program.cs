@@ -11,7 +11,7 @@ namespace MainView
     {
         static void Main(string[] args)
         {
-            OutputViewVM output = new OutputViewVM();
+            new OutputViewVM();
         }
     }
 }

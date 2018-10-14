@@ -15,5 +15,17 @@ namespace MainView.View
             _output = output;
         }
 
+        public void StartGame(ConsoleKey input)
+        {
+            if (input.Equals(ConsoleKey.S))
+            {
+                // START
+                // Steps:
+                // 1 - setup game objects
+                // 2 - load board
+                // 3 - await input
+            }
+            _output.StartMenuListener();
+        }
     }
 }

@@ -14,6 +14,18 @@ namespace MainView.View
         public OutputViewVM()
         {
             _view = new MainView(this);
+            OpenMenu();
+        }
+
+        private void OpenMenu()
+        {
+            _view.ShowMenu();
+            _view.MenuListener();
+        }
+
+        public void StartMenuListener()
+        {
+            _view.MenuListener();
         }
     }
 }
