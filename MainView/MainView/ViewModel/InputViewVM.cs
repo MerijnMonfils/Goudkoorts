@@ -17,6 +17,9 @@ namespace MainView.View
 
         public void StartGame(ConsoleKey input)
         {
+            if (input.Equals(ConsoleKey.Escape))
+                Environment.Exit(0);
+
             if (input.Equals(ConsoleKey.S))
             {
                 // START
@@ -24,6 +27,19 @@ namespace MainView.View
                 // 1 - setup game objects
                 // 2 - load board
                 // 3 - await input
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine("");
+                Console.WriteLine("— — — — — — — — — K — — — \\      ");
+                Console.WriteLine("                            |    ");
+                Console.WriteLine("A: — — \\    / — — — \\       |    ");
+                Console.WriteLine("        v — ^        v — — /     ");
+                Console.WriteLine("B: — — /     \\      /            ");
+                Console.WriteLine("              \\    /             ");
+                Console.WriteLine("               v — ^             ");
+                Console.WriteLine("C: — — — — — — /    \\ — — \\      ");
+                Console.WriteLine("                           |     ");
+                Console.WriteLine("_ _ _ _ _ _ _ _ — — — — — /      ");
             }
             _output.StartMenuListener();
         }
