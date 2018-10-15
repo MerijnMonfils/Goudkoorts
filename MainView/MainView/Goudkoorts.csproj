@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Application\Program.cs" />
     <Compile Include="Enum\Symbols.cs" />
+    <Compile Include="Model\FileReading\FileReader.cs" />
     <Compile Include="Model\LinkBuilder\LinkBuilder.cs" />
     <Compile Include="Model\MainModel\MainModel.cs" />
     <Compile Include="Model\MoveAbles\Cart.cs" />
@@ -67,6 +68,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Level\level.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

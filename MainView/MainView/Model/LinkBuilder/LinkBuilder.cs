@@ -1,18 +1,20 @@
-﻿// Model references
-using Goudkoorts.Model.Rails;
+﻿using Goudkoorts.Model.Rails;
 
 namespace Goudkoorts.Model.LinkBuilder
 {
     class LinkBuilder
     {
-        public LinkBuilder()
-        {
+        private char[,] _level;
 
+        public LinkBuilder(char[,] level)
+        {
+            this._level = level;
+            CreateLinks();
         }
 
         public void CreateLinks()
         {
-
+            
         }
 
     }

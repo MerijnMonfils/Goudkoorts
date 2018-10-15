@@ -1,9 +1,6 @@
 ﻿using Goudkoorts.Model.FileReading;
+using Goudkoorts.Model.LinkBuilder;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Goudkoorts.View
 {
@@ -29,6 +26,7 @@ namespace Goudkoorts.View
                 // 2 - load boardw
                 // 3 - await input
                 FileReader fr = new FileReader();
+                LinkBuilder builder = new LinkBuilder(fr.LoadLevel());
             }
             _output.StartMenuListener();
         }
