@@ -44,6 +44,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Program.cs" />
+    <Compile Include="Enum\Symbols.cs" />
+    <Compile Include="Model\LinkBuilder\LinkBuilder.cs" />
+    <Compile Include="Model\MainModel\MainModel.cs" />
+    <Compile Include="Model\MoveAbles\Cart.cs" />
+    <Compile Include="Model\MoveAbles\MoveableObject.cs" />
+    <Compile Include="Model\MoveAbles\Ship.cs" />
+    <Compile Include="Model\Rails\Dock.cs" />
+    <Compile Include="Model\Rails\HoldingRail.cs" />
+    <Compile Include="Model\Rails\NormalRail.cs" />
+    <Compile Include="Model\Rails\Rail.cs" />
+    <Compile Include="Model\Rails\SwitchRail.cs" />
+    <Compile Include="Model\Rails\Warehouse.cs" />
+    <Compile Include="Model\Score\Score.cs" />
+    <Compile Include="Model\TimedEvents\Countdown.cs" />
+    <Compile Include="Model\TimedEvents\Intervals.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\InputViewVM.cs" />
     <Compile Include="ViewModel\OutputViewVM.cs" />
@@ -52,8 +67,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
