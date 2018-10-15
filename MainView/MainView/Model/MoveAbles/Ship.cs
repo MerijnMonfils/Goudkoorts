@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Goudkoorts.Model.MoveAbles
 {
-    class Ship
+    class Ship : IMoveableObject
     {
     }
 }

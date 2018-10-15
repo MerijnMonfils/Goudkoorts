@@ -1,4 +1,5 @@
-﻿using Goudkoorts.Model.FileReading;
+﻿using Goudkoorts.Model;
+using Goudkoorts.Model.FileReading;
 using Goudkoorts.Model.LinkBuilder;
 using System;
 
@@ -25,8 +26,9 @@ namespace Goudkoorts.View
                 // 1 - setup game objects
                 // 2 - load boardw
                 // 3 - await input
-                FileReader fr = new FileReader();
-                LinkBuilder builder = new LinkBuilder(fr.LoadLevel());
+                // FileReader fr = new FileReader();
+                // LinkBuilder builder = new LinkBuilder(fr.LoadLevel(), new MainModel());
+                ExampleLevel();
             }
             _output.StartMenuListener();
         }

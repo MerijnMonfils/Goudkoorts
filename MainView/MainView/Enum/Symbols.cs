@@ -8,5 +8,23 @@ namespace Goudkoorts.Enum
 {
     public enum Symbols
     {
+        // cart
+        FullCart = 'Ü',
+        EmptyCart = 'U',
+        // rails
+        NormalRail = '-',
+        HoldingRail = '_',
+        CornerRailA = '/',
+        CornerRailB = '\\',
+        StraightRail = '|',
+        // switch
+        SwitchUp = '^',
+        SwitchDown = 'v',
+        // warehouses
+        WarehouseA = 'A',
+        WarehouseB = 'B',
+        WarehouseC = 'C',
+        // dock
+        Dock = 'K',
     }
 }

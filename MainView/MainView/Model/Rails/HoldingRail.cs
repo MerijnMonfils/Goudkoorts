@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Goudkoorts.Model.Rails
 {
-    class HoldingRail
+    class HoldingRail : IRail
     {
+        public IRail Next { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IRail Previous { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }
