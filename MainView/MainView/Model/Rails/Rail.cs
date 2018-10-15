@@ -8,5 +8,8 @@ namespace Goudkoorts.Model.Rails
 {
     interface IRail
     {
+        IRail Next { get; set; }
+        IRail Previous { get; set; }
+
     }
 }

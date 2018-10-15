@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Goudkoorts.Model.FileReading;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,23 +26,28 @@ namespace Goudkoorts.View
                 // START
                 // Steps:
                 // 1 - setup game objects
-                // 2 - load board
+                // 2 - load boardw
                 // 3 - await input
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.BackgroundColor = ConsoleColor.DarkBlue;
-                Console.WriteLine("");
-                Console.WriteLine("— — — — — — — — — K — — — \\      ");
-                Console.WriteLine("                            |    ");
-                Console.WriteLine("A: — — \\    / — — — \\       |    ");
-                Console.WriteLine("        v — ^        v — — /     ");
-                Console.WriteLine("B: — — /     \\      /            ");
-                Console.WriteLine("              \\    /             ");
-                Console.WriteLine("               v — ^             ");
-                Console.WriteLine("C: — — — — — — /    \\ — — \\      ");
-                Console.WriteLine("                           |     ");
-                Console.WriteLine("_ _ _ _ _ _ _ _ — — — — — /      ");
+                FileReader fr = new FileReader();
             }
             _output.StartMenuListener();
+        }
+
+        public void ExampleLevel()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine("");
+            Console.WriteLine("— — — — — — — — — K — — — \\      ");
+            Console.WriteLine("                            |    ");
+            Console.WriteLine("A: — — \\    / — — — \\       |    ");
+            Console.WriteLine("        v — ^        v — — /     ");
+            Console.WriteLine("B: — — /     \\      /            ");
+            Console.WriteLine("              \\    /             ");
+            Console.WriteLine("               v — ^             ");
+            Console.WriteLine("C: — — — — — — /    \\ — — \\      ");
+            Console.WriteLine("                           |     ");
+            Console.WriteLine("_ _ _ _ _ _ _ _ — — — — — /      ");
         }
     }
 }
