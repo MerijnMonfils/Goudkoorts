@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MainView.View;
+using Goudkoorts.View;
 
-namespace MainView.View
+namespace Goudkoorts.View
 {
     class OutputViewVM
     {

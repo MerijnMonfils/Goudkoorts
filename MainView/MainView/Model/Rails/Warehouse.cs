@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainView.Model.Rails
+namespace Goudkoorts.Model.Rails
 {
     class Warehouse
     {

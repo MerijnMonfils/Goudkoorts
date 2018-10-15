@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainView.Model.MoveAbles
+namespace Goudkoorts.Model.MoveAbles
 {
     class Ship
     {

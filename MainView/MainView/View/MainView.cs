@@ -1,11 +1,11 @@
-﻿using MainView.View;
+﻿using Goudkoorts.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainView
+namespace Goudkoorts
 {
     class MainView
     {
@@ -35,7 +35,8 @@ namespace MainView
 
         public void MenuListener()
         {
-            Console.ForegroundColor = ConsoleColor.Black;
+            // removes user input
+            Console.ForegroundColor = ConsoleColor.Black; 
             _input.StartGame(Console.ReadKey().Key);
         }
 

@@ -1,11 +1,11 @@
-﻿using MainView.View;
+﻿using Goudkoorts.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainView
+namespace Goudkoorts
 {
     class Program
     {

@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Model references
+using Goudkoorts.Model.Rails;
 
-namespace MainView.Model.LinkBuilder
+namespace Goudkoorts.Model.LinkBuilder
 {
     class LinkBuilder
     {
+
+
+        public LinkBuilder()
+        {
+
+        }
+
+        public void CreateLinks(Rail obj)
+        {
+
+        }
+
     }
 }
