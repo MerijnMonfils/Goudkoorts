@@ -14,7 +14,7 @@ namespace Goudkoorts.Model.FileReading
         {
             this._path = ("..\\Level");
             this._di = new DirectoryInfo(_path);
-            _file = _di.GetFiles()[0].FullName;
+            _file = _di.GetFiles()[1].FullName;
         }
 
         public char[,] LoadLevel()

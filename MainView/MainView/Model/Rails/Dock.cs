@@ -8,7 +8,9 @@ namespace Goudkoorts.Model.Rails
 {
     class Dock : IRail
     {
-        public IRail Next { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IRail Previous { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IRail Next { get { return Next; } set { Next = value; } }
+        public IRail Previous { get { return Next; } set { Next = value; } }
+        public IRail Below { get { return Next; } set { Next = value; } }
+        public IRail Above { get { return Next; } set { Next = value; } }
     }
 }

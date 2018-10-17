@@ -10,6 +10,8 @@ namespace Goudkoorts.Model
     class MainModel
     {
         public IRail EndOflevelLink { get; set; }
+        public IRail FirstInPreviousRow { get; set; }
+        public IRail FirstInCurrentRow { get; set; }
 
     }
 }

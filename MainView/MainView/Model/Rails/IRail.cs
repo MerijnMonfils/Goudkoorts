@@ -10,6 +10,7 @@ namespace Goudkoorts.Model.Rails
     {
         IRail Next { get; set; }
         IRail Previous { get; set; }
-
+        IRail Below { get; set; }
+        IRail Above { get; set; }
     }
 }

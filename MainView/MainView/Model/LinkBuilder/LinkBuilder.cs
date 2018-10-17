@@ -8,6 +8,8 @@ namespace Goudkoorts.Model.LinkBuilder
     class LinkBuilder
     {
         private MainModel _mainModel;
+        private IRail _prevObj;
+        private int _prevPos;
 
         public LinkBuilder(char[,] level, MainModel mainModel)
         {
@@ -20,7 +22,6 @@ namespace Goudkoorts.Model.LinkBuilder
         /// </summary>
         public void CreateLinks(char[,] level)
         {
-            System.Console.WriteLine();
             for (int row = 0; row < level.GetLength(0); row++)  // for each row
             {
                 for (int coll = 0; coll < level.GetLength(1); coll++) // for each column of current row
@@ -30,18 +31,19 @@ namespace Goudkoorts.Model.LinkBuilder
                     {
                         LinkLogic(rail, row);
                     }
-                    System.Console.Write(level[row, coll] + " ");
-                    continue;
-                    IRail switchRail = CheckForSwitch(level[row, coll], level[row - 1, coll], level[row + 1, coll]);
-                    if (switchRail != null)
+                    if(level[row, coll].Equals((char)Symbols.SwitchDown) 
+                        || level[row, coll].Equals((char)Symbols.SwitchUp))
                     {
-                        LinkLogic(switchRail, row);
+                        IRail switchRail = CheckForSwitch(level[row, coll], level[row - 1, coll], level[row + 1, coll]);
+                        if (switchRail != null)
+                        {
+                            LinkLogic(switchRail, row);
+                        }
                     }
                 }
-                System.Console.WriteLine();
             }
         }
-        
+
         /// <summary>
         /// Creates all the links necessary for the functionality of the game
         /// </summary>
@@ -51,7 +53,59 @@ namespace Goudkoorts.Model.LinkBuilder
             if (_mainModel.EndOflevelLink == null)
             {
                 _mainModel.EndOflevelLink = obj;
+                _prevObj = _mainModel.EndOflevelLink;
+                _mainModel.FirstInCurrentRow = obj;
+                return;
             }
+            else if (posInRow == 0)
+            {
+                _prevObj.Next = obj;
+                obj.Previous = _prevObj;
+                _prevObj = obj;
+                _prevPos = posInRow;
+                return;
+            }
+            return;
+            // new row
+            if (_prevPos != posInRow)
+            {
+                _mainModel.FirstInPreviousRow = _mainModel.FirstInCurrentRow;
+                _mainModel.FirstInCurrentRow = obj;
+                _mainModel.FirstInCurrentRow.Above = _mainModel.FirstInPreviousRow;
+                _mainModel.FirstInPreviousRow.Below = _mainModel.FirstInCurrentRow;
+                _prevObj = _mainModel.FirstInCurrentRow;
+                _prevPos = posInRow;
+                return;
+            }
+            
+            // set previous & next relation
+            obj.Previous = _prevObj;
+            _prevObj.Next = obj;
+
+            // set above & below relation
+            int counter = 0;
+            var temp = obj;
+            while (temp.Previous != null)
+            {
+                temp = temp.Previous;
+                counter++;
+            }
+
+            var match = _mainModel.FirstInPreviousRow;
+
+            for (int x = 0; x < counter; x++)
+            {
+                if (match.Next == null)
+                {
+                    break;
+                }
+                match = match.Next;
+            }
+            obj.Above = match;
+            match.Below = obj;
+
+            // set _prevObj to the current obj
+            _prevObj = obj;
         }
 
         /// <summary>
@@ -85,15 +139,14 @@ namespace Goudkoorts.Model.LinkBuilder
 
         public IRail CheckForSwitch(char posSwitch, char posAbove, char posBelow)
         {
-            if(posSwitch.Equals((char)Symbols.SwitchDown) || posSwitch.Equals((char)Symbols.SwitchUp))
+            if (posSwitch.Equals((char)Symbols.SwitchDown) || posSwitch.Equals((char)Symbols.SwitchUp))
             {
                 if (posAbove.Equals((char)Symbols.CornerRailB) && posBelow.Equals((char)Symbols.CornerRailA))
                 {
-                    System.Console.WriteLine("Conversion found");
                     return new SwitchConversion();
-                } else if (posAbove.Equals((char)Symbols.CornerRailA) && posBelow.Equals((char)Symbols.CornerRailB))
+                }
+                else if (posAbove.Equals((char)Symbols.CornerRailA) && posBelow.Equals((char)Symbols.CornerRailB))
                 {
-                    System.Console.WriteLine("Diversion found");
                     return new SwitchDiversion();
                 }
             }

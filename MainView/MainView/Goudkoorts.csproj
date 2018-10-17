@@ -72,7 +72,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Level\level.txt" />
+    <Content Include="bin\Level\levelClean.txt" />
+    <Content Include="bin\Level\level.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
