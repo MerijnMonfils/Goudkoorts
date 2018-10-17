@@ -12,7 +12,7 @@ namespace Goudkoorts.Enum
         FullCart = 'Ü',
         EmptyCart = 'U',
         // rails
-        NormalRail = '-',
+        NormalRail = '—',
         HoldingRail = '_',
         CornerRailA = '/',
         CornerRailB = '\\',

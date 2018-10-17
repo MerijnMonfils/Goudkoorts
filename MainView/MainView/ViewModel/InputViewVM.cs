@@ -26,9 +26,11 @@ namespace Goudkoorts.View
                 // 1 - setup game objects
                 // 2 - load boardw
                 // 3 - await input
-                // FileReader fr = new FileReader();
-                // LinkBuilder builder = new LinkBuilder(fr.LoadLevel(), new MainModel());
-                ExampleLevel();
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
+                FileReader fr = new FileReader();
+                LinkBuilder builder = new LinkBuilder(fr.LoadLevel(), new MainModel());
+                // ExampleLevel();
             }
             _output.StartMenuListener();
         }

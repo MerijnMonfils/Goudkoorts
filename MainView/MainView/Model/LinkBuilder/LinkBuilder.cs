@@ -1,5 +1,7 @@
-﻿using Goudkoorts.Enum;
+﻿using System;
+using Goudkoorts.Enum;
 using Goudkoorts.Model.Rails;
+using MainView.Model.Rails;
 
 namespace Goudkoorts.Model.LinkBuilder
 {
@@ -18,24 +20,35 @@ namespace Goudkoorts.Model.LinkBuilder
         /// </summary>
         public void CreateLinks(char[,] level)
         {
+            System.Console.WriteLine();
             for (int row = 0; row < level.GetLength(0); row++)  // for each row
             {
                 for (int coll = 0; coll < level.GetLength(1); coll++) // for each column of current row
                 {
-                    IRail obj = GetObject(level[row, coll]);
-                    if (obj != null)
-                        LinkLogic(obj);
+                    IRail rail = GetObject(level[row, coll]);
+                    if (rail != null)
+                    {
+                        LinkLogic(rail, row);
+                    }
+                    System.Console.Write(level[row, coll] + " ");
+                    continue;
+                    IRail switchRail = CheckForSwitch(level[row, coll], level[row - 1, coll], level[row + 1, coll]);
+                    if (switchRail != null)
+                    {
+                        LinkLogic(switchRail, row);
+                    }
                 }
+                System.Console.WriteLine();
             }
         }
-
+        
         /// <summary>
         /// Creates all the links necessary for the functionality of the game
         /// </summary>
-        public void LinkLogic(IRail obj)
+        public void LinkLogic(IRail obj, int posInRow)
         {
             // execute logic per instance of the IRail Object
-            if(_mainModel.EndOflevelLink == null)
+            if (_mainModel.EndOflevelLink == null)
             {
                 _mainModel.EndOflevelLink = obj;
             }
@@ -54,11 +67,6 @@ namespace Goudkoorts.Model.LinkBuilder
                 // rail holding
                 case (char)Symbols.HoldingRail:
                     return new HoldingRail();
-                // switches
-                case (char)Symbols.SwitchDown:
-                    return new SwitchRail();
-                case (char)Symbols.SwitchUp:
-                    return new SwitchRail();
                 // warehouses
                 case (char)Symbols.WarehouseA:
                     return new Warehouse();
@@ -71,8 +79,25 @@ namespace Goudkoorts.Model.LinkBuilder
                     return new Dock();
                 // wrong or empty symbol
                 default:
-                    return null;
+                    return new EmptyRail();
             }
+        }
+
+        public IRail CheckForSwitch(char posSwitch, char posAbove, char posBelow)
+        {
+            if(posSwitch.Equals((char)Symbols.SwitchDown) || posSwitch.Equals((char)Symbols.SwitchUp))
+            {
+                if (posAbove.Equals((char)Symbols.CornerRailB) && posBelow.Equals((char)Symbols.CornerRailA))
+                {
+                    System.Console.WriteLine("Conversion found");
+                    return new SwitchConversion();
+                } else if (posAbove.Equals((char)Symbols.CornerRailA) && posBelow.Equals((char)Symbols.CornerRailB))
+                {
+                    System.Console.WriteLine("Diversion found");
+                    return new SwitchDiversion();
+                }
+            }
+            return null;
         }
 
     }
