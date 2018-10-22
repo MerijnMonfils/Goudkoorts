@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Goudkoorts.Model.Rails;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,7 @@ namespace Goudkoorts.Model.MoveAbles
 {
     interface IMoveableObject
     {
+        IRail IsOnRail { get; set; }
+        int Speed { get; set; } 
     }
 }

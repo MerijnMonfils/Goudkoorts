@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Goudkoorts.Model;
 using Goudkoorts.View;
 
 namespace Goudkoorts.View
@@ -26,6 +27,22 @@ namespace Goudkoorts.View
         public void StartMenuListener()
         {
             _view.MenuListener();
+        }
+
+        public void SetLevelSettings()
+        {
+            _view.SetLevelSettings();
+        }
+
+        public void RedrawLevel(MainModel _mainModel)
+        {
+            // draw logic
+
+
+
+
+
+            _view.GameListener();
         }
     }
 }

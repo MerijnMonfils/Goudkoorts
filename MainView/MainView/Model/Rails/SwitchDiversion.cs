@@ -24,8 +24,8 @@ namespace MainView.Model.Rails
         public void Switch()
         {
             var temp = HoldRail;
-            HoldRail = Previous;
-            Previous = temp;
+            HoldRail = Next;
+            Next = temp;
             if (Type.Equals(Symbols.SwitchDown))
                 Type = Symbols.SwitchUp;
             else

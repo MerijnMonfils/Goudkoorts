@@ -9,6 +9,8 @@ namespace Goudkoorts.View
     {
         private OutputViewVM _output;
 
+        private MainModel _mainModel;
+
         public InputViewVM(OutputViewVM output)
         {
             _output = output;
@@ -21,40 +23,47 @@ namespace Goudkoorts.View
 
             if (input.Equals(ConsoleKey.S))
             {
-                // START
-                // Steps:
-                // 1 - setup game objects
-                // 2 - load boardw
-                // 3 - await input
-                SetLevelSettings();
-                LinkBuilder builder = new LinkBuilder(new MainModel());
+                StartPlaying();
             }
             _output.StartMenuListener();
         }
 
-        private void SetLevelSettings()
+        private void StartPlaying()
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
-            Console.Title = "Goudkoorts";
-            Console.Clear();
-            Console.WindowHeight = 15;
-            Console.WindowWidth = 35;
+            _mainModel = new MainModel();
+            LinkBuilder builder = new LinkBuilder(_mainModel);
+            _output.RedrawLevel(_mainModel);
+            // set legenda
+            // create controller for playercontrols
+            _output.SetLevelSettings();
         }
 
-        public void ExampleLevel()
+        public void GameControls(ConsoleKey key)
         {
-            Console.WriteLine("");
-            Console.WriteLine("— — — — — — — — — K — — — \\      ");
-            Console.WriteLine("                            |    ");
-            Console.WriteLine("A: — — \\    / — — — \\       |    ");
-            Console.WriteLine("        v — ^        v — — /     ");
-            Console.WriteLine("B: — — /     \\      /            ");
-            Console.WriteLine("              \\    /             ");
-            Console.WriteLine("               v — ^             ");
-            Console.WriteLine("C: — — — — — — /    \\ — — \\      ");
-            Console.WriteLine("                           |     ");
-            Console.WriteLine("_ _ _ _ _ _ _ _ — — — — — /      ");
+            if (key.Equals(ConsoleKey.Escape))
+                Environment.Exit(0);
+
+            if (key.Equals(ConsoleKey.D1))
+            {
+
+            }
+            else if (key.Equals(ConsoleKey.D2))
+            {
+
+            }
+            else if (key.Equals(ConsoleKey.D3))
+            {
+
+            }
+            else if (key.Equals(ConsoleKey.D4))
+            {
+
+            }
+            else if (key.Equals(ConsoleKey.D5))
+            {
+
+            }
+            _output.RedrawLevel(_mainModel);
         }
     }
 }
