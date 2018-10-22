@@ -26,19 +26,24 @@ namespace Goudkoorts.View
                 // 1 - setup game objects
                 // 2 - load boardw
                 // 3 - await input
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.BackgroundColor = ConsoleColor.DarkBlue;
-                FileReader fr = new FileReader();
-                LinkBuilder builder = new LinkBuilder(fr.LoadLevel(), new MainModel());
-                // ExampleLevel();
+                SetLevelSettings();
+                LinkBuilder builder = new LinkBuilder(new MainModel());
             }
             _output.StartMenuListener();
         }
 
-        public void ExampleLevel()
+        private void SetLevelSettings()
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.Title = "Goudkoorts";
+            Console.Clear();
+            Console.WindowHeight = 15;
+            Console.WindowWidth = 35;
+        }
+
+        public void ExampleLevel()
+        {
             Console.WriteLine("");
             Console.WriteLine("— — — — — — — — — K — — — \\      ");
             Console.WriteLine("                            |    ");

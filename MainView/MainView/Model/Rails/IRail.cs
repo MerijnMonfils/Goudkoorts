@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Goudkoorts.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,6 @@ namespace Goudkoorts.Model.Rails
     {
         IRail Next { get; set; }
         IRail Previous { get; set; }
-        IRail Below { get; set; }
-        IRail Above { get; set; }
+        Symbols Type { get; set; }
     }
 }

@@ -9,5 +9,11 @@ namespace Goudkoorts.Model.Rails
     interface ISwitchRail : IRail
     {
         IRail OnHold { get; set; }
+
+        void Switch();
+
+        bool IsOnHold(IRail obj);
+
+
     }
 }
