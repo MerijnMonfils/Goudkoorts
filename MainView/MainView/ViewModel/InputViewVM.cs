@@ -66,8 +66,8 @@ namespace Goudkoorts.View
             {
                 _mainModel.GetSwitch(5).Switch();
             }
-            _output.GameListener();
             _output.RedrawLevel(_mainModel);
+            _output.GameListener();
         }
     }
 }

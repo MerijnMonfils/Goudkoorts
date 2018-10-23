@@ -33,10 +33,9 @@ namespace MainView.Model.Rails
 
         public void Switch()
         {
-            var temp = HoldRail;
-            HoldRail = Next;
-            Next = temp;
-            if (Type.Equals(Symbols.SwitchDown))
+            // SWITCH CONNECTIONS AND ONHOLD
+
+            if (Type.Equals((char)Symbols.SwitchDown))
                 Type = (char)Symbols.SwitchUp;
             else
                 Type = (char)Symbols.SwitchDown;

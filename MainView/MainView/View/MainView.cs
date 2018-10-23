@@ -54,7 +54,7 @@ namespace Goudkoorts
 
         public void GameListener()
         {
-            Console.ForegroundColor = ConsoleColor.Black;
+            // Console.ForegroundColor = ConsoleColor.Black;
             _input.GameControls(Console.ReadKey().Key);
         }
 
