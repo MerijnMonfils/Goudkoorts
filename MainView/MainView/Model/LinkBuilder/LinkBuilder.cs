@@ -8,158 +8,151 @@ namespace Goudkoorts.Model.LinkBuilder
     class LinkBuilder
     {
         private MainModel _mainModel;
-        private IRail _lastObject;
-        
-        public LinkBuilder(MainModel mainModel)
+        private IRail _prevObj;
+        private IRail _firstInCurrentRow;
+        private IRail _firstInPreviousRow;
+
+        private int _prevPos;
+
+        public LinkBuilder(char[,] level, MainModel mainModel)
         {
             _mainModel = mainModel;
-            CreateLinks();
+            CreateLinks(level);
         }
 
-        public void CreateLinks()
+        public void CreateLinks(char[,] level)
         {
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-
-            CreateDockRelation(new Dock(), Symbols.Dock, 1);
-
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.CornerRailB);
-            CreateNormalRelation(new NormalRail(), Symbols.StraightRail);
-            CreateNormalRelation(new NormalRail(), Symbols.StraightRail);
-            CreateNormalRelation(new NormalRail(), Symbols.CornerRailA);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-
-            CreateConversionRelation(new SwitchConversion(), Symbols.SwitchDown, 3);
-            CreateNormalRelation(new NormalRail(), Symbols.CornerRailB);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.CornerRailA);
-
-            CreateDiversionRelation(new SwitchDiversion(), Symbols.SwitchDown, 2);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-
-            CreateConversionRelation(new SwitchConversion(), Symbols.SwitchDown, 1);
-            CreateNormalRelation(new NormalRail(), Symbols.CornerRailB);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-
-            CreateWarehouseRelation(new Warehouse(), Symbols.WarehouseA);
-            _lastObject = _mainModel.GetSwitch(1);
-            _mainModel.GetSwitch(1).OnHold = _mainModel.GetSwitch(1).Previous;
-            
-            CreateNormalRelation(new NormalRail(), Symbols.CornerRailA);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-
-            CreateWarehouseRelation(new Warehouse(), Symbols.WarehouseB);
-            _lastObject = _mainModel.GetSwitch(3);
-            _mainModel.GetSwitch(3).OnHold = _mainModel.GetSwitch(3).Previous;
-
-            CreateNormalRelation(new NormalRail(), Symbols.CornerRailA);
-            CreateNormalRelation(new NormalRail(), Symbols.CornerRailA);
-
-            // SECOND PART
-            CreateDiversionRelation(new SwitchDiversion(), Symbols.SwitchDown, 5);
-            _mainModel.GetSwitch(5).OnHold = _mainModel.GetSwitch(5).Previous;
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-
-            CreateConversionRelation(new SwitchConversion(), Symbols.SwitchDown, 4);
-            CreateNormalRelation(new NormalRail(), Symbols.CornerRailB);
-            CreateNormalRelation(new NormalRail(), Symbols.CornerRailB);
-            _mainModel.GetSwitch(4).OnHold = _mainModel.GetSwitch(4).Previous;
-            _lastObject = _mainModel.GetSwitch(2);
-            _lastObject.Previous = _mainModel.GetSwitch(2);
-            _mainModel.GetSwitch(2).Next = _lastObject;
-            _lastObject = _mainModel.GetSwitch(4);
-
-            CreateNormalRelation(new NormalRail(), Symbols.CornerRailA);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-            CreateNormalRelation(new NormalRail(), Symbols.NormalRail);
-
-            CreateWarehouseRelation(new Warehouse(), Symbols.WarehouseC);
-            _lastObject = _mainModel.GetSwitch(5);
-            
-            CreateBackwardsRelation(new NormalRail(), Symbols.CornerRailB);
-            CreateBackwardsRelation(new NormalRail(), Symbols.StraightRail);
-            CreateBackwardsRelation(new NormalRail(), Symbols.CornerRailA);
-
-            CreateBackwardsRelation(new NormalRail(), Symbols.NormalRail);
-            CreateBackwardsRelation(new NormalRail(), Symbols.NormalRail);
-            CreateBackwardsRelation(new NormalRail(), Symbols.NormalRail);
-            CreateBackwardsRelation(new NormalRail(), Symbols.NormalRail);
-
-            CreateBackwardsRelation(new HoldingRail(), Symbols.HoldingRail);
-            CreateBackwardsRelation(new HoldingRail(), Symbols.HoldingRail);
-            CreateBackwardsRelation(new HoldingRail(), Symbols.HoldingRail);
-            CreateBackwardsRelation(new HoldingRail(), Symbols.HoldingRail);
-            CreateBackwardsRelation(new HoldingRail(), Symbols.HoldingRail);
-            CreateBackwardsRelation(new HoldingRail(), Symbols.HoldingRail);
-            CreateBackwardsRelation(new HoldingRail(), Symbols.HoldingRail);
-            CreateBackwardsRelation(new HoldingRail(), Symbols.HoldingRail);
+            for (int row = 0; row < level.GetLength(0); row++)  // for each row
+            {
+                for (int coll = 0; coll < level.GetLength(1); coll++) // for each column of current row
+                {
+                    if (level[row, coll].Equals((char)Symbols.SwitchDown)
+                      || level[row, coll].Equals((char)Symbols.SwitchUp))
+                    {
+                        IRail switchRail = CheckForSwitch(level[row, coll], level[row - 1, coll], level[row + 1, coll]);
+                        if (switchRail != null)
+                        {
+                            LinkLogic(switchRail, row);
+                            continue;
+                        }
+                    }
+                    LinkLogic(GetObject(level[row, coll]), row);
+                }
+            }
         }
 
-        private IRail CreateNormalRelation(IRail newObj, Symbols type)
+        /// <summary>
+        /// Creates all the links necessary for the functionality of the game
+        /// </summary>
+        public void LinkLogic(IRail obj, int posInRow)
         {
+            // execute logic per instance of the IRail Object
             if (_mainModel.EndOflevelLink == null)
             {
-                _mainModel.EndOflevelLink = newObj;
-                _lastObject = newObj;
-                return _lastObject;
+                _mainModel.EndOflevelLink = obj;
+                _prevObj = _mainModel.EndOflevelLink;
+                _firstInCurrentRow = obj;
+                return;
             }
-            _lastObject.Previous = newObj;
-            newObj.Next = _lastObject;
-            _lastObject = newObj;
-            return _lastObject;
+            else if (posInRow == 0)
+            {
+                _prevObj.Next = obj;
+                obj.Previous = _prevObj;
+                _prevObj = obj;
+                _prevPos = posInRow;
+                return;
+            }
+
+            // new row
+            if (_prevPos != posInRow)
+            {
+                // reset first in current and previous
+                _firstInPreviousRow = _firstInCurrentRow;
+                _firstInCurrentRow = obj;
+                // set links to above and below for first and previous
+                _firstInCurrentRow.Above = _firstInPreviousRow;
+                _firstInPreviousRow.Below = _firstInCurrentRow;
+                // set previous row and object
+                _prevObj = _firstInCurrentRow;
+                _prevPos = posInRow;
+                return;
+            }
+
+            // set previous & next relation
+            obj.Previous = _prevObj;
+            _prevObj.Next = obj;
+
+            // set above & below relation
+            int counter = 0;
+            var temp = obj;
+            while (temp.Previous != null)
+            {
+                temp = temp.Previous;
+                counter++;
+            }
+            var match = _firstInPreviousRow;
+            for (int x = 0; x < counter; x++)
+            {
+                if (match.Next == null)
+                {
+                    break;
+                }
+                match = match.Next;
+            }
+            obj.Above = match;
+            match.Below = obj;
+
+            _prevObj = obj;
         }
 
-        private IRail CreateBackwardsRelation(IRail newObj, Symbols type)
+        /// <summary>
+        /// Returns the corrosponding object equal to the parameter
+        /// </summary>
+        public IRail GetObject(char pos)
         {
-            _lastObject.Next = newObj;
-            newObj.Previous = _lastObject;
-            _lastObject = newObj;
-            return _lastObject;
+            switch (pos)
+            {   
+                // rails
+                case (char)Symbols.HoldingRail:
+                    return new HoldingRail(Symbols.HoldingRail);
+                case (char)Symbols.NormalRail:
+                    return new NormalRail(Symbols.NormalRail);
+                case (char)Symbols.CornerRailA:
+                    return new NormalRail(Symbols.CornerRailA);
+                case (char)Symbols.CornerRailB:
+                    return new NormalRail(Symbols.CornerRailB);
+                case (char)Symbols.StraightRail:
+                    return new NormalRail(Symbols.StraightRail);
+                // warehouses
+                case (char)Symbols.WarehouseA:
+                    return new Warehouse(Symbols.WarehouseA);
+                case (char)Symbols.WarehouseB:
+                    return new Warehouse(Symbols.WarehouseB);
+                case (char)Symbols.WarehouseC:
+                    return new Warehouse(Symbols.WarehouseC);
+                // dock
+                case (char)Symbols.Dock:
+                    return new Dock(Symbols.Dock);
+                // wrong or empty symbol
+                default:
+                    return new EmptyRail(Symbols.EmptyRail);
+            }
         }
 
-        private void CreateConversionRelation(ISwitchRail obj, Symbols type, int pos)
+        public IRail CheckForSwitch(char posSwitch, char posAbove, char posBelow)
         {
-            _mainModel.AddSwitch(pos, obj);
-            obj.Next = _lastObject;
-            _lastObject.Previous = obj;
-        }
-
-        private void CreateDiversionRelation(ISwitchRail obj, Symbols type, int pos)
-        {
-            _mainModel.AddSwitch(pos, obj);
-            obj.Next = _lastObject;
-            _lastObject.Previous = obj;
-        }
-
-        private void CreateWarehouseRelation(Warehouse obj, Symbols type) 
-        {
-            _mainModel.AddWarehouse(type, obj);
-            obj.Next = _lastObject;
-            _lastObject.Previous = obj;
-        }
-
-        private void CreateDockRelation(Dock obj, Symbols type, int pos)
-        {
-            _mainModel.AddDock(pos, obj);
-            obj.Next = _lastObject;
-            _lastObject.Previous = obj;
-            _lastObject = obj;
+            if (posSwitch.Equals((char)Symbols.SwitchDown) || posSwitch.Equals((char)Symbols.SwitchUp))
+            {
+                if (posAbove.Equals((char)Symbols.CornerRailB) && posBelow.Equals((char)Symbols.CornerRailA))
+                {
+                    return new SwitchConversion(Symbols.SwitchDown);
+                }
+                else if (posAbove.Equals((char)Symbols.CornerRailA) && posBelow.Equals((char)Symbols.CornerRailB))
+                {
+                    return new SwitchDiversion(Symbols.SwitchDown);
+                }
+            }
+            return null;
         }
     }
 }

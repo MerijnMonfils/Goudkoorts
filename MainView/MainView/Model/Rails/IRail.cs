@@ -11,6 +11,8 @@ namespace Goudkoorts.Model.Rails
     {
         IRail Next { get; set; }
         IRail Previous { get; set; }
-        Symbols Type { get; set; }
+        IRail Above { get; set; }
+        IRail Below { get; set; }
+        char Type { get; set; }
     }
 }

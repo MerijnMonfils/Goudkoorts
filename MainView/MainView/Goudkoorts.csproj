@@ -52,6 +52,7 @@
     <Compile Include="Model\MoveAbles\MoveableObject.cs" />
     <Compile Include="Model\MoveAbles\Ship.cs" />
     <Compile Include="Model\Rails\Dock.cs" />
+    <Compile Include="Model\Rails\EmptyRail.cs" />
     <Compile Include="Model\Rails\HoldingRail.cs" />
     <Compile Include="Model\Rails\NormalRail.cs" />
     <Compile Include="Model\Rails\IRail.cs" />

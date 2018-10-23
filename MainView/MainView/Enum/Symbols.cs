@@ -17,6 +17,7 @@ namespace Goudkoorts.Enum
         CornerRailA = '/',
         CornerRailB = '\\',
         StraightRail = '|',
+        EmptyRail = ' ',
         // switch
         SwitchUp = '^',
         SwitchDown = 'v',

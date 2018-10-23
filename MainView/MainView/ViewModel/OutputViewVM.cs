@@ -36,7 +36,22 @@ namespace Goudkoorts.View
 
         public void RedrawLevel(MainModel _mainModel)
         {
-            // draw logic
+            _view.Clear();
+            
+            var rows = _mainModel.EndOflevelLink;
+            var columns = _mainModel.EndOflevelLink;
+
+            while (rows != null)
+            {
+                while (columns != null)
+                {
+                    _view.Write(columns.Type + "");
+                    columns = columns.Next;
+                }
+                _view.WriteLine("");
+                rows = rows.Below;
+                columns = rows;
+            }
         }
 
         public void GameListener()

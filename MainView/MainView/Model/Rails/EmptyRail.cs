@@ -1,13 +1,14 @@
 ﻿using Goudkoorts.Enum;
+using Goudkoorts.Model.Rails;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Goudkoorts.Model.Rails
+namespace MainView.Model.Rails
 {
-    class Warehouse : IRail
+    class EmptyRail : IRail
     {
         private IRail NextRail;
         private IRail PreviousRail;
@@ -15,7 +16,7 @@ namespace Goudkoorts.Model.Rails
         private IRail BelowRail;
         private char TypeOfRail;
 
-        public Warehouse(Symbols type)
+        public EmptyRail(Symbols type)
         {
             TypeOfRail = (char)type;
         }

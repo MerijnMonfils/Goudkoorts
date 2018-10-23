@@ -27,12 +27,17 @@ namespace Goudkoorts
             this.WriteInCenter("'Escape' om op elk punt af te sluiten.");
         }
 
+        public void Clear()
+        {
+            Console.Clear();
+        }
+
         public void SetLevelSettings()
         {
             Console.ForegroundColor = ConsoleColor.White;
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            //Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.Title = "Goudkoorts";
-            Console.Clear();
+            this.Clear();
         }
         
         private void WriteInCenter(string text)
@@ -43,7 +48,7 @@ namespace Goudkoorts
 
         public void MenuListener()
         {
-            Console.ForegroundColor = ConsoleColor.Black; 
+            // Console.ForegroundColor = ConsoleColor.Black; 
             _input.StartGame(Console.ReadKey().Key);
         }
 
