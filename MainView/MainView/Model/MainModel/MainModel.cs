@@ -1,21 +1,20 @@
 ﻿using Goudkoorts.Enum;
 using Goudkoorts.Model.Rails;
-using MainView.Model.Rails;
-using System;
+using Goudkoorts.Model.TimedEvents;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Timers;
 
 namespace Goudkoorts.Model
 {
     class MainModel
     {
         public IRail EndOflevelLink { get; set; }
-        
+        public bool IsLocked { get; set; }
+
         private Dictionary<int, ISwitchRail> _switches;
         private Dictionary<Symbols, Warehouse> _warehouses;
         private Dictionary<int, Dock> _docks;
+        
 
         public MainModel()
         {
@@ -29,6 +28,13 @@ namespace Goudkoorts.Model
             _switches.Add(pos, obj);
         }
 
+        public void StartGame()
+        {
+            // execute game logic
+            // move carts
+            // spawn carts
+        }
+
         public void AddWarehouse(Symbols type, Warehouse obj)
         {
             _warehouses.Add(type, obj);
@@ -38,7 +44,6 @@ namespace Goudkoorts.Model
         {
             _docks.Add(pos, obj);
         }
-
         public ISwitchRail GetSwitch(int pos)
         {
             return _switches[pos];

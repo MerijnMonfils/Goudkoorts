@@ -37,11 +37,10 @@ namespace Goudkoorts.View
         public void RedrawLevel(MainModel _mainModel)
         {
             // draw logic
+        }
 
-
-
-
-
+        public void GameListener()
+        {
             _view.GameListener();
         }
     }

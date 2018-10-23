@@ -43,7 +43,6 @@ namespace Goudkoorts
 
         public void MenuListener()
         {
-            // removes user input
             Console.ForegroundColor = ConsoleColor.Black; 
             _input.StartGame(Console.ReadKey().Key);
         }
