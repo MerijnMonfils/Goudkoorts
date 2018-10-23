@@ -1,7 +1,9 @@
-﻿using Goudkoorts.Enum;
+﻿using System;
+using Goudkoorts.Enum;
 using Goudkoorts.Model.Rails;
 using Goudkoorts.Model.TimedEvents;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Timers;
 
 namespace Goudkoorts.Model
@@ -14,7 +16,7 @@ namespace Goudkoorts.Model
         private Dictionary<int, ISwitchRail> _switches;
         private Dictionary<Symbols, Warehouse> _warehouses;
         private Dictionary<int, Dock> _docks;
-        
+        private readonly Random _random = new Random();
 
         public MainModel()
         {
@@ -30,9 +32,7 @@ namespace Goudkoorts.Model
 
         public void StartGame()
         {
-            // execute game logic
-            // move carts
-            // spawn carts
+          GetWarehouse().SpawnCarts();
         }
 
         public void AddWarehouse(Symbols type, Warehouse obj)
@@ -54,9 +54,27 @@ namespace Goudkoorts.Model
             return _docks[pos];
         }
 
-        public Warehouse GetWarehouse(Symbols type)
+        public Warehouse GetWarehouse()
         {
+            Symbols type = new Symbols();
+            
+            int letter = _random.Next(1, 4);
+
+            switch (letter)
+            {
+                case 1:
+                    type = Symbols.WarehouseA;
+                    break;
+                case 2:
+                    type = Symbols.WarehouseB;
+                    break;
+                case 3:
+                    type = Symbols.WarehouseC;
+                    break;
+            }
             return _warehouses[type];
         }
+
+
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Goudkoorts.Model.MoveAbles;
 
 namespace MainView.Model.Rails
 {
@@ -18,6 +19,7 @@ namespace MainView.Model.Rails
 
         public IRail Next { get { return NextRail; } set { NextRail = value; } }
         public Symbols Type { get { return TypeOfRail; } set { TypeOfRail = value; } }
+        public IMoveableObject ContainsMoveableObject { get; set; }
         public IRail OnHold { get { return HoldRail; } set { HoldRail = value; } }
         public IRail Previous { get { return PreviousRail; } set { PreviousRail = value; } }
 
