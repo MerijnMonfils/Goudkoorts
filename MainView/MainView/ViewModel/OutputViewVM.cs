@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Goudkoorts.Enum;
 using Goudkoorts.Model;
+using Goudkoorts.Model.Rails;
 using Goudkoorts.View;
 
 namespace Goudkoorts.View
@@ -37,7 +39,7 @@ namespace Goudkoorts.View
         public void RedrawLevel(MainModel _mainModel)
         {
             _view.Clear();
-            
+
             var rows = _mainModel.EndOflevelLink;
             var columns = _mainModel.EndOflevelLink;
 

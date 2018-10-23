@@ -137,8 +137,8 @@ namespace Goudkoorts.Model.LinkBuilder
                     _mainModel.AddWarehouse(Symbols.WarehouseB, wB);
                     return wB;
                 case (char)Symbols.WarehouseC:
-                    Warehouse wC = new Warehouse(Symbols.WarehouseB);
-                    _mainModel.AddWarehouse(Symbols.WarehouseB, wC);
+                    Warehouse wC = new Warehouse(Symbols.WarehouseC);
+                    _mainModel.AddWarehouse(Symbols.WarehouseC, wC);
                     return wC;
                 // dock
                 case (char)Symbols.Dock:
