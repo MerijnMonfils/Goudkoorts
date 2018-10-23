@@ -13,6 +13,7 @@ namespace Goudkoorts.Model.LinkBuilder
         private IRail _firstInPreviousRow;
 
         private int _prevPos;
+        private int _currSwitch;
 
         public LinkBuilder(char[,] level, MainModel mainModel)
         {
@@ -32,11 +33,11 @@ namespace Goudkoorts.Model.LinkBuilder
                         IRail switchRail = CheckForSwitch(level[row, coll], level[row - 1, coll], level[row + 1, coll]);
                         if (switchRail != null)
                         {
-                            LinkLogic(switchRail, row);
+                            LinkLogic(switchRail, row, true);
                             continue;
                         }
                     }
-                    LinkLogic(GetObject(level[row, coll]), row);
+                    LinkLogic(GetObject(level[row, coll]), row, false);
                 }
             }
         }
@@ -44,7 +45,7 @@ namespace Goudkoorts.Model.LinkBuilder
         /// <summary>
         /// Creates all the links necessary for the functionality of the game
         /// </summary>
-        public void LinkLogic(IRail obj, int posInRow)
+        public void LinkLogic(IRail obj, int posInRow, bool isSwitch)
         {
             // execute logic per instance of the IRail Object
             if (_mainModel.EndOflevelLink == null)
@@ -99,9 +100,12 @@ namespace Goudkoorts.Model.LinkBuilder
                 }
                 match = match.Next;
             }
-            obj.Above = match;
+            if (isSwitch)
+                _mainModel.GetSwitch(_currSwitch).OnHold = match;
+            else
+                obj.Above = match;
+            
             match.Below = obj;
-
             _prevObj = obj;
         }
 
@@ -111,7 +115,7 @@ namespace Goudkoorts.Model.LinkBuilder
         public IRail GetObject(char pos)
         {
             switch (pos)
-            {   
+            {
                 // rails
                 case (char)Symbols.HoldingRail:
                     return new HoldingRail(Symbols.HoldingRail);
@@ -125,14 +129,22 @@ namespace Goudkoorts.Model.LinkBuilder
                     return new NormalRail(Symbols.StraightRail);
                 // warehouses
                 case (char)Symbols.WarehouseA:
-                    return new Warehouse(Symbols.WarehouseA);
+                    Warehouse wA = new Warehouse(Symbols.WarehouseA);
+                    _mainModel.AddWarehouse(Symbols.WarehouseA, wA);
+                    return wA;
                 case (char)Symbols.WarehouseB:
-                    return new Warehouse(Symbols.WarehouseB);
+                    Warehouse wB = new Warehouse(Symbols.WarehouseB);
+                    _mainModel.AddWarehouse(Symbols.WarehouseB, wB);
+                    return wB;
                 case (char)Symbols.WarehouseC:
-                    return new Warehouse(Symbols.WarehouseC);
+                    Warehouse wC = new Warehouse(Symbols.WarehouseB);
+                    _mainModel.AddWarehouse(Symbols.WarehouseB, wC);
+                    return wC;
                 // dock
                 case (char)Symbols.Dock:
-                    return new Dock(Symbols.Dock);
+                    Dock d = new Dock(Symbols.Dock);
+                    _mainModel.AddDock(1, d);
+                    return d;
                 // wrong or empty symbol
                 default:
                     return new EmptyRail(Symbols.EmptyRail);
@@ -141,15 +153,20 @@ namespace Goudkoorts.Model.LinkBuilder
 
         public IRail CheckForSwitch(char posSwitch, char posAbove, char posBelow)
         {
+            _currSwitch++;
             if (posSwitch.Equals((char)Symbols.SwitchDown) || posSwitch.Equals((char)Symbols.SwitchUp))
             {
                 if (posAbove.Equals((char)Symbols.CornerRailB) && posBelow.Equals((char)Symbols.CornerRailA))
                 {
-                    return new SwitchConversion(Symbols.SwitchDown);
+                    SwitchConversion c = new SwitchConversion(Symbols.SwitchDown);
+                    _mainModel.AddSwitch(_currSwitch, c);
+                    return c;
                 }
                 else if (posAbove.Equals((char)Symbols.CornerRailA) && posBelow.Equals((char)Symbols.CornerRailB))
                 {
-                    return new SwitchDiversion(Symbols.SwitchDown);
+                    SwitchDiversion c = new SwitchDiversion(Symbols.SwitchDown);
+                    _mainModel.AddSwitch(_currSwitch, c);
+                    return c;
                 }
             }
             return null;
