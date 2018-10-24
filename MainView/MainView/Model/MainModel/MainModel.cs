@@ -16,7 +16,7 @@ namespace Goudkoorts.Model
 
         private Dictionary<int, ISwitchRail> _switches;
         private Dictionary<Symbols, Warehouse> _warehouses;
-        private Dictionary<int, Dock> _docks;
+        private List<Dock> _docks;
         private List<Ship> _ships;
         private List<Cart> _carts;
 
@@ -30,7 +30,7 @@ namespace Goudkoorts.Model
         {
             _switches = new Dictionary<int, ISwitchRail>();
             _warehouses = new Dictionary<Symbols, Warehouse>();
-            _docks = new Dictionary<int, Dock>();
+            _docks = new List<Dock>();
             _carts = new List<Cart>();
             _ships = new List<Ship>();
             _input = input;
@@ -41,7 +41,7 @@ namespace Goudkoorts.Model
             _carts.Add(cart);
         }
 
-        public void AddShips(Ship ship)
+        public void AddShip(Ship ship)
         {
             _ships.Add(ship);
         }
@@ -83,18 +83,34 @@ namespace Goudkoorts.Model
             _warehouses.Add(type, obj);
         }
 
-        public void AddDock(int pos, Dock obj)
+        public void AddDock(Dock obj)
         {
-            _docks.Add(pos, obj);
+            _docks.Add(obj);
         }
         public ISwitchRail GetSwitch(int pos)
         {
             return _switches[pos];
         }
 
-        public Dock GetDock(int pos)
+        public List<Dock> GetAllDocks()
         {
-            return _docks[pos];
+            return _docks;
+        }
+
+        public int AmountOfShips()
+        {
+            int amountOfShips = 0;
+            foreach (Ship s in GetAllShips())
+                amountOfShips++;
+            return amountOfShips;
+        }
+
+        public int AmountOfDocks()
+        {
+            int amountOfShips = 0;
+            foreach (Dock d in GetAllDocks())
+                amountOfShips++;
+            return amountOfShips;
         }
 
         public Warehouse GetWarehouse(Symbols type)

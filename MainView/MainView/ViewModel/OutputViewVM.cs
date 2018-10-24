@@ -7,6 +7,7 @@ using Goudkoorts.Enum;
 using Goudkoorts.Model;
 using Goudkoorts.Model.Rails;
 using Goudkoorts.ViewModel;
+using MainView.Model.Rails;
 
 namespace Goudkoorts.ViewModel
 {

@@ -143,7 +143,7 @@ namespace Goudkoorts.Model.LinkBuilder
                 // dock
                 case (char)Symbols.Dock:
                     Dock d = new Dock(Symbols.Dock);
-                    _mainModel.AddDock(1, d);
+                    _mainModel.AddDock(d);
                     return d;
                 case (char)Symbols.Water:
                     return new ShipRail(Symbols.Water);

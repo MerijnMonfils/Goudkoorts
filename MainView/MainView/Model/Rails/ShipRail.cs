@@ -16,7 +16,7 @@ namespace MainView.Model.Rails
         private IRail AboveRail;
         private IRail BelowRail;
         private char TypeOfRail;
-        private IMoveableObject ContainsCart;
+        private IMoveableObject ContainsShips;
         private bool Locked;
 
         public ShipRail(Symbols type)
@@ -29,7 +29,7 @@ namespace MainView.Model.Rails
         public IRail Above { get { return AboveRail; } set { AboveRail = value; } }
         public IRail Below { get { return BelowRail; } set { BelowRail = value; } }
         public char Type { get { return TypeOfRail; } set { TypeOfRail = value; } }
-        public IMoveableObject ContainsMoveableObject { get { return ContainsCart; } set { ContainsCart = value; } }
+        public IMoveableObject ContainsMoveableObject { get { return ContainsShips; } set { ContainsShips = value; } }
         public bool IsLocked { get { return Locked; } set { Locked = value; } }
 
         public bool IsOnHold(IRail obj)

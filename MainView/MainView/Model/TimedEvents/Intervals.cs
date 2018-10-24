@@ -31,17 +31,26 @@ namespace Goudkoorts.Model.TimedEvents
                 Thread.Sleep(_time);
                 SpawnRandomCart();
                 CheckToSpawnShip();
+                MoveAllShips();
                 MoveAllCarts();
                 _input.Redraw(_main);
             }
         }
 
+        private void MoveAllShips()
+        {
+            foreach(Ship s in _main.GetAllShips())
+            {
+                s.Move();
+            }
+        }
+
         private void CheckToSpawnShip()
         {
-            if(_main.GetDock(1).ContainsShip == null)
-            {
-                _main.AddShips(_main.GetDock(1).SpawnShip());
-            }
+            if (_main.AmountOfDocks() == _main.AmountOfShips())
+                return;
+            else
+                _main.AddShip(_main.GetAllDocks().First().SpawnShip());
         }
 
         private void SpawnRandomCart()

@@ -11,6 +11,7 @@ namespace Goudkoorts.Model.MoveAbles
         private Random _random;
         private IRail _currentRail;
         private Direction LastMove;
+        private char Icon;
 
         public Ship()
         {
@@ -22,10 +23,13 @@ namespace Goudkoorts.Model.MoveAbles
 
         public Direction CameFrom { get { return LastMove; } set { LastMove = value; } }
 
-        public char Type { get { return Type; } set { Type = value; } }
+        public char Type { get { return Icon; } set { Icon = value; } }
 
         public void Move()
         {
+            if (_currentRail is Dock)
+                return;
+
             int direction = _random.Next(1, 5);
 
             switch (direction)
@@ -56,20 +60,17 @@ namespace Goudkoorts.Model.MoveAbles
         {
             if (move == null)
                 return;
-            try
+            if (move is Dock)
             {
-                
-            } catch (Exception e)
-            {
-                return;
+                move.ContainsMoveableObject = this;
+                this._currentRail = move;
+                this._currentRail.ContainsMoveableObject = null;
             }
-
-            if(move is Dock)
+            else if (move is ShipRail && !(_currentRail is Dock))
             {
-
-            } else if (move is ShipRail)
-            {
-
+                move.ContainsMoveableObject = this;
+                this._currentRail = move;
+                this._currentRail.ContainsMoveableObject = null;
             }
         }
 

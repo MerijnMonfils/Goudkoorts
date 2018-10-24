@@ -17,12 +17,14 @@ namespace Goudkoorts.Model.Rails
         private char TypeOfRail;
         private IMoveableObject ContainsCart;
         private bool Locked;
+        private Random _random;
 
         private int _amount { get; set; }
 
         public Dock(Symbols type)
         {
             TypeOfRail = (char)type;
+            _random = new Random();
         }
 
         public IRail Next { get { return NextRail; } set { NextRail = value; } }
@@ -44,7 +46,10 @@ namespace Goudkoorts.Model.Rails
         public Ship SpawnShip()
         {
             Ship s = new Ship();
-            s.IsOnRail = GetRandomShipLocation();
+            var temp = GetRandomShipLocation();
+            s.IsOnRail = temp;
+            temp.ContainsMoveableObject = s;
+            s.Type = (char)Symbols.ShipFull;
             return s;
         }
 
@@ -68,6 +73,13 @@ namespace Goudkoorts.Model.Rails
                 amountOfColumns++;
                 temp2 = temp2.Next;
             }
+            int randomRow = _random.Next(0, amountOfRows+1);
+            int randomColumn = _random.Next(1, amountOfColumns);
+            for(int x = 0; x < randomRow; x++)
+                temp = temp.Below;
+            for (int i = 0; i < randomColumn; i++)
+                temp = temp.Next;
+            return temp;
         }
 
         public void UpdateShip()
