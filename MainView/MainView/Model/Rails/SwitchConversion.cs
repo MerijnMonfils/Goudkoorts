@@ -1,4 +1,5 @@
 ﻿using Goudkoorts.Enum;
+using Goudkoorts.Model.MoveAbles;
 using Goudkoorts.Model.Rails;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace MainView.Model.Rails
         private IRail BelowRail;
         private IRail HoldRail;
         private char TypeOfRail;
+        private IMoveableObject ContainsCart;
 
         public SwitchConversion(Symbols type)
         {
@@ -30,7 +32,7 @@ namespace MainView.Model.Rails
         public char Type { get { return TypeOfRail; } set { TypeOfRail = value; } }
         public IRail Above { get { return AboveRail; } set { AboveRail = value; } }
         public IRail Below { get { return BelowRail; } set { BelowRail = value; } }
-
+        public IMoveableObject ContainsMoveableObject { get { return ContainsCart; } set { ContainsCart = value; } }
         public void Switch()
         {
             // SWITCH CONNECTIONS AND ONHOLD

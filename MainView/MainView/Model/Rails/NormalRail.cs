@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Goudkoorts.Enum;
+using Goudkoorts.Model.MoveAbles;
 
 namespace Goudkoorts.Model.Rails
 {
@@ -14,6 +15,7 @@ namespace Goudkoorts.Model.Rails
         private IRail AboveRail;
         private IRail BelowRail;
         private char TypeOfRail;
+        private IMoveableObject ContainsCart;
 
         public NormalRail(Symbols type)
         {
@@ -24,6 +26,8 @@ namespace Goudkoorts.Model.Rails
         public IRail Previous { get { return PreviousRail; } set { PreviousRail = value; } }
         public IRail Above { get { return AboveRail; } set { AboveRail = value; } }
         public IRail Below { get { return BelowRail; } set { BelowRail = value; } }
+        public char Type { get { return TypeOfRail; } set { TypeOfRail = value; } }
+        public IMoveableObject ContainsMoveableObject { get { return ContainsCart; } set { ContainsCart = value; } }
         public char Type { get { return TypeOfRail; } set { TypeOfRail = value; } }
     }
 }

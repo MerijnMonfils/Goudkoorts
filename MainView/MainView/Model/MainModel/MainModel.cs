@@ -2,6 +2,7 @@
 using Goudkoorts.Model.Rails;
 using Goudkoorts.Model.TimedEvents;
 using System.Collections.Generic;
+using System.Threading;
 using System.Timers;
 
 namespace Goudkoorts.Model
@@ -14,7 +15,8 @@ namespace Goudkoorts.Model
         private Dictionary<int, ISwitchRail> _switches;
         private Dictionary<Symbols, Warehouse> _warehouses;
         private Dictionary<int, Dock> _docks;
-        
+
+        private Thread _game, _counter;
 
         public MainModel()
         {
@@ -23,16 +25,30 @@ namespace Goudkoorts.Model
             _docks = new Dictionary<int, Dock>();
         }
 
+        public void StartThreads()
+        {
+            _game = new Thread(() => StartGame(this));
+            _game.Name = "Game";
+            _game.Start();
+            //_counter = new Thread(CreateCounter);
+            //_counter.Name = "Counter";
+            //_counter.Start();
+        }
+
+        private void StartGame(MainModel main)
+        {
+            Intervals intervals = new Intervals(main);
+            intervals.Start();
+        }
+
+        private void CreateCounter()
+        {
+            // counter logic
+        }
+
         public void AddSwitch(int pos, ISwitchRail obj)
         {
             _switches.Add(pos, obj);
-        }
-
-        public void StartGame()
-        {
-            // execute game logic
-            // move carts
-            // spawn carts
         }
 
         public void AddWarehouse(Symbols type, Warehouse obj)

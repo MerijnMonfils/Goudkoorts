@@ -9,21 +9,17 @@ namespace Goudkoorts.Model.TimedEvents
 {
     class Countdown
     {
-        private MainModel _main;
-
         private int _counter;
 
-        public Countdown(MainModel main)
+        public Countdown()
         {
-            _main = main;
             _counter = 100000;
         }
 
         public ThreadStart StartTimer()
         {
             // timer logic
-            Thread.Sleep(_counter);
-            _main.IsLocked = true;
+            // Thread.Sleep(_counter);
             // TODO: ASK MAIN TO GET ONE GAME CYCLE/ROUND AND SLEEP
             // AFTERWARDS RESET ISLOCKED TO FALSE AND RESTART THE TIMER
             return null;

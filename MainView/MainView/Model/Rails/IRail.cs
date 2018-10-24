@@ -1,4 +1,5 @@
 ﻿using Goudkoorts.Enum;
+using Goudkoorts.Model.MoveAbles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace Goudkoorts.Model.Rails
         IRail Above { get; set; }
         IRail Below { get; set; }
         char Type { get; set; }
+        IMoveableObject ContainsMoveableObject { get; set; }
     }
 }

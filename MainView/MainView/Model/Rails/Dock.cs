@@ -1,4 +1,5 @@
 ﻿using Goudkoorts.Enum;
+using Goudkoorts.Model.MoveAbles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Goudkoorts.Model.Rails
         private IRail AboveRail;
         private IRail BelowRail;
         private char TypeOfRail;
+        private IMoveableObject CartOrShip;
 
         public Dock(Symbols type)
         {
@@ -25,5 +27,6 @@ namespace Goudkoorts.Model.Rails
         public IRail Above { get { return AboveRail; } set { AboveRail = value; } }
         public IRail Below { get { return BelowRail; } set { BelowRail = value; } }
         public char Type { get { return TypeOfRail; } set { TypeOfRail = value; } }
+        public IMoveableObject ContainsMoveableObject { get { return CartOrShip; } set { CartOrShip = value; } }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Goudkoorts.Enum;
+using Goudkoorts.Model.MoveAbles;
 using Goudkoorts.Model.Rails;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace MainView.Model.Rails
         private IRail AboveRail;
         private IRail BelowRail;
         private char TypeOfRail;
+        private IMoveableObject ContainsCart;
 
         public EmptyRail(Symbols type)
         {
@@ -26,5 +28,6 @@ namespace MainView.Model.Rails
         public IRail Above { get { return AboveRail; } set { AboveRail = value; } }
         public IRail Below { get { return BelowRail; } set { BelowRail = value; } }
         public char Type { get { return TypeOfRail; } set { TypeOfRail = value; } }
+        public IMoveableObject ContainsMoveableObject { get { return ContainsCart; } set { ContainsCart = value; } }
     }
 }
