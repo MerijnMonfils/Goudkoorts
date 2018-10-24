@@ -12,8 +12,8 @@ namespace Goudkoorts.Model.TimedEvents
     class Intervals
     {
         private MainModel _main;
-
         private Random _random;
+        private int _time = 3000;
 
         public Intervals(MainModel main)
         {
@@ -25,7 +25,7 @@ namespace Goudkoorts.Model.TimedEvents
         {
             while (true)
             {
-                Thread.Sleep(3000);
+                Thread.Sleep(_time);
                 SpawnRandomCart();
                 MoveAllCarts();
             }
@@ -55,6 +55,11 @@ namespace Goudkoorts.Model.TimedEvents
             {
                // Move logic
             }
+        }
+
+        public int GetTime()
+        {
+            return _time;
         }
     }
 }

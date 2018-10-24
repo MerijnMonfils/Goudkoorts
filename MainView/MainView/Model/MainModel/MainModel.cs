@@ -20,6 +20,8 @@ namespace Goudkoorts.Model
         private List<Cart> _carts;
 
         private Thread _game, _counter;
+        private Countdown _countdown;
+        private Intervals _intervals;
 
         public MainModel()
         {
@@ -39,21 +41,27 @@ namespace Goudkoorts.Model
             _game = new Thread(() => StartGame(this));
             _game.Name = "Game";
             _game.Start();
-            //_counter = new Thread(CreateCounter);
-            //_counter.Name = "Counter";
-            //_counter.Start();
+            _counter = new Thread(() => CreateCounter(this));
+            _counter.Name = "Counter";
+            _counter.Start();
         }
 
         private void StartGame(MainModel main)
         {
-            Intervals intervals = new Intervals(main);
-            intervals.Start();
+            _intervals = new Intervals(main);
+            _intervals.Start();
         }
 
-        private void CreateCounter()
+        public int GetRoundTime()
         {
-            // counter logic
+            return _intervals.GetTime();
         }
+
+        private void CreateCounter(MainModel main)
+        {
+            _countdown = new Countdown(main);
+            _countdown.Start();
+        }        
 
         public void AddSwitch(int pos, ISwitchRail obj)
         {

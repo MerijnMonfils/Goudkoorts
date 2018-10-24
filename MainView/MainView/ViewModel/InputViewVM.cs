@@ -45,7 +45,7 @@ namespace Goudkoorts.View
                 Environment.Exit(0);
 
             if (_mainModel.IsLocked)
-                return;
+                _output.GameListener();
 
             if (key.Equals(ConsoleKey.D1))
             {
