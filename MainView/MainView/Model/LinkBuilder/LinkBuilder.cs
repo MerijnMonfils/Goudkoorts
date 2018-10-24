@@ -145,6 +145,8 @@ namespace Goudkoorts.Model.LinkBuilder
                     Dock d = new Dock(Symbols.Dock);
                     _mainModel.AddDock(1, d);
                     return d;
+                case (char)Symbols.Water:
+                    return new ShipRail(Symbols.Water);
                 // wrong or empty symbol
                 default:
                     return new EmptyRail(Symbols.EmptyRail);

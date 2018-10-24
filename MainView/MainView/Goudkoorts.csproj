@@ -57,6 +57,7 @@
     <Compile Include="Model\Rails\HoldingRail.cs" />
     <Compile Include="Model\Rails\NormalRail.cs" />
     <Compile Include="Model\Rails\IRail.cs" />
+    <Compile Include="Model\Rails\ShipRail.cs" />
     <Compile Include="Model\Rails\SwitchConversion.cs" />
     <Compile Include="Model\Rails\SwitchDiversion.cs" />
     <Compile Include="Model\Rails\ISwitchRail.cs" />

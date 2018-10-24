@@ -1,5 +1,5 @@
 ﻿using Goudkoorts.Enum;
-using Goudkoorts.View;
+using Goudkoorts.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,14 +61,24 @@ namespace Goudkoorts
         // Show title
         public void ShowTitle()
         {
-            Console.WriteLine("\n\n");
+            Console.Write("\n ");
             WriteLineInCenter("Goudkoorts", true);
         }
 
-        // Shows lengenda
+        // Show controls
+        public void ShowControls(bool isLocked)
+        {
+            WriteLineInCenter("Controls", true);
+            if (isLocked)
+                WriteLineInCenter("LOCKED", true);
+            else
+                WriteLineInCenter(" 1 - 2 - 3 - 4 - 5 ", true);
+        }
+
+        // Show symbol meanings
         public void ShowLegenda()
         {
-            Console.WriteLine("\n");
+            Console.WriteLine();
             WriteLineInCenter("Legenda:", true);
             WriteLineInCenter(" " + (char)Symbols.FullCart + " - Volle Kar ", true);
             WriteLineInCenter(" " + (char)Symbols.EmptyCart + " - Lege Kar ", true);

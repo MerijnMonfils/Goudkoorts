@@ -1,5 +1,6 @@
 ﻿using Goudkoorts.Enum;
 using Goudkoorts.Model.MoveAbles;
+using Goudkoorts.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,14 @@ namespace Goudkoorts.Model.TimedEvents
     class Intervals
     {
         private MainModel _main;
+        private InputViewVM _input;
         private Random _random;
         private int _time = 3000;
 
-        public Intervals(MainModel main)
+        public Intervals(MainModel main, InputViewVM input)
         {
             this._main = main;
+            this._input = input;
             _random = new Random();
         }
 
@@ -28,6 +31,7 @@ namespace Goudkoorts.Model.TimedEvents
                 Thread.Sleep(_time);
                 SpawnRandomCart();
                 MoveAllCarts();
+                _input.Redraw(_main);
             }
         }
 

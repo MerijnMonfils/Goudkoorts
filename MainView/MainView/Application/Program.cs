@@ -1,4 +1,4 @@
-﻿using Goudkoorts.View;
+﻿using Goudkoorts.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

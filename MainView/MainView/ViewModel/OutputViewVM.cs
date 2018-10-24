@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 using Goudkoorts.Enum;
 using Goudkoorts.Model;
 using Goudkoorts.Model.Rails;
-using Goudkoorts.View;
+using Goudkoorts.ViewModel;
 
-namespace Goudkoorts.View
+namespace Goudkoorts.ViewModel
 {
     class OutputViewVM
     {
         private MainView _view;
+
+        private readonly object syncLock = new object();
 
         public OutputViewVM()
         {
@@ -33,31 +35,35 @@ namespace Goudkoorts.View
 
         public void RedrawLevel(MainModel _mainModel)
         {
-            _view.Clear();
-            _view.ShowTitle();
-
-            var rows = _mainModel.EndOflevelLink;
-            var columns = _mainModel.EndOflevelLink;
-
-            int row = 0;
-
-            while (rows != null)
+            lock (syncLock)
             {
-                _view.WriteLine("");
-                while (columns != null)
+                _view.Clear();
+                _view.ShowTitle();
+
+                var rows = _mainModel.EndOflevelLink;
+                var columns = _mainModel.EndOflevelLink;
+
+                int row = 0;
+
+                while (rows != null)
                 {
-                    if (columns.ContainsMoveableObject != null)
-                        _view.DrawMoveable(columns.ContainsMoveableObject.Type + "");
-                    else
-                        _view.Write(columns.Type + "", row);
-                    columns = columns.Next;
+                    _view.WriteLine("");
+                    while (columns != null)
+                    {
+                        if (columns.ContainsMoveableObject != null)
+                            _view.DrawMoveable(columns.ContainsMoveableObject.Type + "");
+                        else
+                            _view.Write(columns.Type + "", row);
+                        columns = columns.Next;
+                    }
+                    rows = rows.Below;
+                    columns = rows;
+                    row++;
                 }
-                rows = rows.Below;
-                columns = rows;
-                row++;
+                _view.WriteLine("\n");
+                _view.ShowControls(_mainModel.IsLocked);
+                _view.ShowLegenda();
             }
-            _view.ShowLegenda();
-            //_view.ShowControls();
         }
 
         public void GameListener()

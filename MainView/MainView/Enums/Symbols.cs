@@ -27,5 +27,6 @@ namespace Goudkoorts.Enum
         WarehouseC = 'C',
         // dock
         Dock = 'K',
+        Water = '~',
     }
 }

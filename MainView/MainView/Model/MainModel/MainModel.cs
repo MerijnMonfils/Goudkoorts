@@ -2,10 +2,10 @@
 using Goudkoorts.Model.MoveAbles;
 using Goudkoorts.Model.Rails;
 using Goudkoorts.Model.TimedEvents;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
+using Goudkoorts.ViewModel;
 
 namespace Goudkoorts.Model
 {
@@ -23,12 +23,16 @@ namespace Goudkoorts.Model
         private Countdown _countdown;
         private Intervals _intervals;
 
-        public MainModel()
+        private InputViewVM _input;
+
+        public MainModel(InputViewVM input)
         {
             _switches = new Dictionary<int, ISwitchRail>();
             _warehouses = new Dictionary<Symbols, Warehouse>();
             _docks = new Dictionary<int, Dock>();
             _carts = new List<Cart>();
+
+            _input = input;
         }
 
         public void AddCart(Cart cart)
@@ -38,17 +42,17 @@ namespace Goudkoorts.Model
 
         public void StartThreads()
         {
-            _game = new Thread(() => StartGame(this));
+            _game = new Thread(() => StartGame(this, _input));
             _game.Name = "Game";
             _game.Start();
-            _counter = new Thread(() => CreateCounter(this));
+            _counter = new Thread(() => CreateCounter(this, _input));
             _counter.Name = "Counter";
             _counter.Start();
         }
 
-        private void StartGame(MainModel main)
+        private void StartGame(MainModel main, InputViewVM input)
         {
-            _intervals = new Intervals(main);
+            _intervals = new Intervals(main, input);
             _intervals.Start();
         }
 
@@ -57,9 +61,9 @@ namespace Goudkoorts.Model
             return _intervals.GetTime();
         }
 
-        private void CreateCounter(MainModel main)
+        private void CreateCounter(MainModel main, InputViewVM input)
         {
-            _countdown = new Countdown(main);
+            _countdown = new Countdown(main, input);
             _countdown.Start();
         }        
 

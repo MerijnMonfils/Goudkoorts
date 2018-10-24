@@ -2,9 +2,8 @@
 using Goudkoorts.Model.FileReading;
 using Goudkoorts.Model.LinkBuilder;
 using System;
-using System.Threading;
 
-namespace Goudkoorts.View
+namespace Goudkoorts.ViewModel
 {
     class InputViewVM
     {
@@ -30,7 +29,7 @@ namespace Goudkoorts.View
 
         private void StartPlaying()
         {
-            _mainModel = new MainModel();
+            _mainModel = new MainModel(this);
             FileReader r = new FileReader();
             LinkBuilder builder = new LinkBuilder(r.LoadLevel(), _mainModel);
             _output.RedrawLevel(_mainModel);
@@ -44,7 +43,10 @@ namespace Goudkoorts.View
                 Environment.Exit(0);
 
             if (_mainModel.IsLocked)
+            {
+                _output.RedrawLevel(_mainModel);
                 _output.GameListener();
+            }
 
             if (key.Equals(ConsoleKey.D1))
             {
@@ -68,6 +70,11 @@ namespace Goudkoorts.View
             }
             _output.RedrawLevel(_mainModel);
             _output.GameListener();
+        }
+
+        public void Redraw(MainModel main)
+        {
+            _output.RedrawLevel(main);
         }
     }
 }
