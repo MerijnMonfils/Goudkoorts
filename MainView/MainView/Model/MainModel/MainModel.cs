@@ -1,10 +1,8 @@
 ﻿using System;
 using Goudkoorts.Enum;
 using Goudkoorts.Model.Rails;
-using Goudkoorts.Model.TimedEvents;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Timers;
+using System.Threading;
 
 namespace Goudkoorts.Model
 {
@@ -17,6 +15,8 @@ namespace Goudkoorts.Model
         private Dictionary<Symbols, Warehouse> _warehouses;
         private Dictionary<int, Dock> _docks;
         private readonly Random _random = new Random();
+
+        private Thread _game;
 
         public MainModel()
         {
@@ -32,7 +32,23 @@ namespace Goudkoorts.Model
 
         public void StartGame()
         {
-          GetWarehouse().SpawnCarts();
+            StartThreads();
+
+            // GetWarehouse().SpawnCarts();
+        }
+
+        private void StartThreads()
+        {
+            // start counter thread -> uses IsLocked bool property
+            //_game = new Thread(new ThreadStart(PlayGame));
+            //_game.Name = "Game";
+            //_game.Start();
+        }
+
+        private void PlayGame()
+        {
+            //Thread.Sleep(10000);
+            Console.WriteLine("Tick");
         }
 
         public void AddWarehouse(Symbols type, Warehouse obj)
@@ -57,7 +73,7 @@ namespace Goudkoorts.Model
         public Warehouse GetWarehouse()
         {
             Symbols type = new Symbols();
-            
+
             int letter = _random.Next(1, 4);
 
             switch (letter)
