@@ -47,6 +47,8 @@ namespace Goudkoorts.Model.MoveAbles
                     break;
                 case 3: // left
                     CameFrom = GetOpposite(Direction.Left);
+                    if (_currentRail.Previous.Previous == null)
+                        Move();
                     Move(_currentRail.Previous);
                     break;
                 case 4: // right
@@ -62,7 +64,10 @@ namespace Goudkoorts.Model.MoveAbles
         private void Move(IRail move)
         {
             if (move == null)
-                return;
+                Move();
+            if (!(move is Dock) && !(move is ShipRail))
+                Move();
+
             if (move is Dock || move is ShipRail)
             {
                 var temp = this;
