@@ -63,7 +63,7 @@
     <Compile Include="Model\Rails\ISwitchRail.cs" />
     <Compile Include="Model\Rails\Warehouse.cs" />
     <Compile Include="Model\Score\Score.cs" />
-    <Compile Include="Model\TimedEvents\Countdown.cs" />
+    <Compile Include="Model\TimedEvents\Lockdown.cs" />
     <Compile Include="Model\TimedEvents\Intervals.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\InputViewVM.cs" />

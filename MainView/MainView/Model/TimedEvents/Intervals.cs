@@ -15,7 +15,7 @@ namespace Goudkoorts.Model.TimedEvents
         private MainModel _main;
         private InputViewVM _input;
         private Random _random;
-        private readonly int _time = 3000;
+        private readonly int _time = 1000;
 
         public Intervals(MainModel main, InputViewVM input)
         {
@@ -29,10 +29,10 @@ namespace Goudkoorts.Model.TimedEvents
             while (true)
             {
                 Thread.Sleep(_time);
-                SpawnRandomCart();
+                //SpawnRandomCart();
                 CheckToSpawnShip();
                 MoveAllShips();
-                MoveAllCarts();
+                //MoveAllCarts();
                 _input.Redraw(_main);
             }
         }
