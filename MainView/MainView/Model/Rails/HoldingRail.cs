@@ -28,5 +28,10 @@ namespace Goudkoorts.Model.Rails
         public IRail Below { get { return BelowRail; } set { BelowRail = value; } }
         public char Type { get { return TypeOfRail; } set { TypeOfRail = value; } }
         public IMoveableObject ContainsMoveableObject { get { return ContainsCart; } set { ContainsCart = value; } }
+
+        public bool IsOnHold(IRail obj)
+        {
+            return false;
+        }
     }
 }

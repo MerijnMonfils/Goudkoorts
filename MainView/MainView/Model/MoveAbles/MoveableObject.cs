@@ -1,4 +1,5 @@
 ﻿using Goudkoorts.Model.Rails;
+using Goudkoorts.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace Goudkoorts.Model.MoveAbles
     interface IMoveableObject
     {
         IRail IsOnRail { get; set; }
-        int Speed { get; set; } 
+        Direction CameFrom { get; set; }
     }
 }

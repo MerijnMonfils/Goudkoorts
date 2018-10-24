@@ -15,6 +15,8 @@ namespace Goudkoorts.Model.Rails
         IRail Above { get; set; }
         IRail Below { get; set; }
         char Type { get; set; }
+        bool IsOnHold(IRail obj);
         IMoveableObject ContainsMoveableObject { get; set; }
+
     }
 }

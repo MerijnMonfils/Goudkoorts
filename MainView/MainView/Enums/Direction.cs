@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Goudkoorts.Model.Rails
+namespace Goudkoorts.Enums
 {
-    interface ISwitchRail : IRail
+    enum Direction
     {
-        IRail OnHold { get; set; }
-
-        void Switch();
-
+        Up, Down, Left, Right
     }
 }
