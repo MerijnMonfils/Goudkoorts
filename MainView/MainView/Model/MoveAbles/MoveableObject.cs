@@ -13,5 +13,6 @@ namespace Goudkoorts.Model.MoveAbles
         IRail IsOnRail { get; set; }
         Direction CameFrom { get; set; }
         char Type { get; set; }
+        void Move();
     }
 }

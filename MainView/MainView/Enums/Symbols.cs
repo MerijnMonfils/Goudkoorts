@@ -28,5 +28,8 @@ namespace Goudkoorts.Enum
         // dock
         Dock = 'K',
         Water = '~',
+        ShipLeft = '<',
+        ShipRight = '>',
+        ShipFull = '■',
     }
 }

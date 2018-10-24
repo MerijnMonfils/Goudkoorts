@@ -17,6 +17,7 @@ namespace Goudkoorts.Model
         private Dictionary<int, ISwitchRail> _switches;
         private Dictionary<Symbols, Warehouse> _warehouses;
         private Dictionary<int, Dock> _docks;
+        private List<Ship> _ships;
         private List<Cart> _carts;
 
         private Thread _game, _counter;
@@ -31,13 +32,18 @@ namespace Goudkoorts.Model
             _warehouses = new Dictionary<Symbols, Warehouse>();
             _docks = new Dictionary<int, Dock>();
             _carts = new List<Cart>();
-
+            _ships = new List<Ship>();
             _input = input;
         }
 
         public void AddCart(Cart cart)
         {
             _carts.Add(cart);
+        }
+
+        public void AddShips(Ship ship)
+        {
+            _ships.Add(ship);
         }
 
         public void StartThreads()
@@ -99,6 +105,11 @@ namespace Goudkoorts.Model
         public List<Cart> GetAllCarts()
         {
             return _carts;
+        }
+
+        public List<Ship> GetAllShips()
+        {
+            return _ships;
         }
     }
 }

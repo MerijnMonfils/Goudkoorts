@@ -52,6 +52,8 @@ namespace Goudkoorts.ViewModel
                     {
                         if (columns.ContainsMoveableObject != null)
                             _view.DrawMoveable(columns.ContainsMoveableObject.Type + "");
+                        else if (columns is ISwitchRail)
+                            _view.DrawSwitch(columns.Type + "");
                         else
                             _view.Write(columns.Type + "", row);
                         columns = columns.Next;
