@@ -33,7 +33,6 @@ namespace Goudkoorts.View
             _mainModel = new MainModel();
             FileReader r = new FileReader();
             LinkBuilder builder = new LinkBuilder(r.LoadLevel(), _mainModel);
-            _output.SetLevelSettings();
             _output.RedrawLevel(_mainModel);
             _mainModel.StartThreads();
             _output.GameListener();

@@ -31,32 +31,33 @@ namespace Goudkoorts.View
             _view.MenuListener();
         }
 
-        public void SetLevelSettings()
-        {
-            _view.SetLevelSettings();
-        }
-
         public void RedrawLevel(MainModel _mainModel)
         {
             _view.Clear();
+            _view.ShowTitle();
 
             var rows = _mainModel.EndOflevelLink;
             var columns = _mainModel.EndOflevelLink;
 
+            int row = 0;
+
             while (rows != null)
             {
+                _view.WriteLine("");
                 while (columns != null)
                 {
                     if (columns.ContainsMoveableObject != null)
-                        _view.Write(columns.ContainsMoveableObject.Type + "");
+                        _view.DrawMoveable(columns.ContainsMoveableObject.Type + "");
                     else
-                        _view.Write(columns.Type + "");
+                        _view.Write(columns.Type + "", row);
                     columns = columns.Next;
                 }
-                _view.WriteLine("");
                 rows = rows.Below;
                 columns = rows;
+                row++;
             }
+            _view.ShowLegenda();
+            //_view.ShowControls();
         }
 
         public void GameListener()
