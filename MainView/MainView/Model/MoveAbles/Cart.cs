@@ -28,9 +28,13 @@ namespace Goudkoorts.Model.MoveAbles
 
         public void Move()
         {
-            _currentRail.Next.ContainsMoveableObject = this;
-            _currentRail.ContainsMoveableObject = null;
-            _currentRail = _currentRail.Next;
+            if (_currentRail.Next != null)
+            {
+                _currentRail.Next.ContainsMoveableObject = this;
+                _currentRail.ContainsMoveableObject = null;
+                _currentRail = _currentRail.Next;
+            }
+            
         }
     }
 }
