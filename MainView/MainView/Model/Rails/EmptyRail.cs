@@ -17,6 +17,7 @@ namespace MainView.Model.Rails
         private IRail BelowRail;
         private char TypeOfRail;
         private IMoveableObject ContainsCart;
+        private bool Locked;
 
         public EmptyRail(Symbols type)
         {
@@ -29,6 +30,7 @@ namespace MainView.Model.Rails
         public IRail Below { get { return BelowRail; } set { BelowRail = value; } }
         public char Type { get { return TypeOfRail; } set { TypeOfRail = value; } }
         public IMoveableObject ContainsMoveableObject { get { return ContainsCart; } set { ContainsCart = value; } }
+        public bool IsLocked { get { return Locked; } set { Locked = value; } }
 
         public bool IsOnHold(IRail obj)
         {

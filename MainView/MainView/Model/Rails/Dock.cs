@@ -16,6 +16,7 @@ namespace Goudkoorts.Model.Rails
         private IRail BelowRail;
         private char TypeOfRail;
         private IMoveableObject CartOrShip;
+        private bool Locked;
 
         public Dock(Symbols type)
         {
@@ -28,6 +29,8 @@ namespace Goudkoorts.Model.Rails
         public IRail Below { get { return BelowRail; } set { BelowRail = value; } }
         public char Type { get { return TypeOfRail; } set { TypeOfRail = value; } }
         public IMoveableObject ContainsMoveableObject { get { return CartOrShip; } set { CartOrShip = value; } }
+
+        public bool IsLocked { get { return Locked; } set { Locked = value; } }
 
         public bool IsOnHold(IRail obj)
         {

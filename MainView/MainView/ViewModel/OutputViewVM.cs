@@ -47,7 +47,10 @@ namespace Goudkoorts.View
             {
                 while (columns != null)
                 {
-                    _view.Write(columns.Type + "");
+                    if (columns.ContainsMoveableObject != null)
+                        _view.Write(columns.ContainsMoveableObject.Type + "");
+                    else
+                        _view.Write(columns.Type + "");
                     columns = columns.Next;
                 }
                 _view.WriteLine("");

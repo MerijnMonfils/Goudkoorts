@@ -16,6 +16,7 @@ namespace Goudkoorts.Model.Rails
         private IRail BelowRail;
         private char TypeOfRail;
         private IMoveableObject ContainsCart;
+        private bool Locked;
 
         public Warehouse(Symbols type)
         {
@@ -28,14 +29,18 @@ namespace Goudkoorts.Model.Rails
         public IRail Below { get { return BelowRail; } set { BelowRail = value; } }
         public char Type { get { return TypeOfRail; } set { TypeOfRail = value; } }
         public IMoveableObject ContainsMoveableObject { get { return ContainsCart; } set { ContainsCart = value; } }
+        public bool IsLocked { get { return Locked; } set { Locked = value; } }
 
         public bool IsOnHold(IRail obj)
         {
             return false;
         }
-        public void SpawnCart()
+
+        public Cart SpawnCart()
         {
-            
+            Cart c = new Cart(Symbols.FullCart);
+            Next.ContainsMoveableObject = c;
+            return c;
         }
     }
 }

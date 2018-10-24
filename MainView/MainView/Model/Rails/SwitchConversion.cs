@@ -20,6 +20,7 @@ namespace MainView.Model.Rails
         private IRail HoldRail;
         private char TypeOfRail;
         private IMoveableObject ContainsCart;
+        private bool LockedSwitch;
 
         public SwitchConversion(Symbols type)
         {
@@ -33,8 +34,12 @@ namespace MainView.Model.Rails
         public IRail Above { get { return AboveRail; } set { AboveRail = value; } }
         public IRail Below { get { return BelowRail; } set { BelowRail = value; } }
         public IMoveableObject ContainsMoveableObject { get { return ContainsCart; } set { ContainsCart = value; } }
+        public bool IsLocked { get { return LockedSwitch; } set { LockedSwitch = value; } }
+
         public void Switch()
         {
+            if (LockedSwitch)
+                return;
             // SWITCH CONNECTIONS AND ONHOLD
 
             if (Type.Equals((char)Symbols.SwitchDown))

@@ -1,9 +1,11 @@
 ﻿using Goudkoorts.Enum;
+using Goudkoorts.Model.MoveAbles;
 using Goudkoorts.Model.Rails;
 using Goudkoorts.Model.TimedEvents;
+using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Timers;
+using System.Linq;
 
 namespace Goudkoorts.Model
 {
@@ -15,6 +17,7 @@ namespace Goudkoorts.Model
         private Dictionary<int, ISwitchRail> _switches;
         private Dictionary<Symbols, Warehouse> _warehouses;
         private Dictionary<int, Dock> _docks;
+        private List<Cart> _carts;
 
         private Thread _game, _counter;
 
@@ -23,6 +26,12 @@ namespace Goudkoorts.Model
             _switches = new Dictionary<int, ISwitchRail>();
             _warehouses = new Dictionary<Symbols, Warehouse>();
             _docks = new Dictionary<int, Dock>();
+            _carts = new List<Cart>();
+        }
+
+        public void AddCart(Cart cart)
+        {
+            _carts.Add(cart);
         }
 
         public void StartThreads()
@@ -73,6 +82,11 @@ namespace Goudkoorts.Model
         public Warehouse GetWarehouse(Symbols type)
         {
             return _warehouses[type];
+        }
+
+        public List<Cart> GetAllCarts()
+        {
+            return _carts;
         }
     }
 }

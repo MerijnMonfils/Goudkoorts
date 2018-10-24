@@ -11,6 +11,5 @@ namespace Goudkoorts.Model.Rails
         IRail OnHold { get; set; }
 
         void Switch();
-
     }
 }
