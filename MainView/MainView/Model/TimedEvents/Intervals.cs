@@ -29,10 +29,10 @@ namespace Goudkoorts.Model.TimedEvents
             while (true)
             {
                 Thread.Sleep(_time);
-                //SpawnRandomCart();
+                SpawnRandomCart();
                 CheckToSpawnShip();
                 MoveAllShips();
-                //MoveAllCarts();
+                MoveAllCarts();
                 _input.Redraw(_main);
             }
         }
@@ -60,13 +60,13 @@ namespace Goudkoorts.Model.TimedEvents
             switch (letter)
             {
                 case 1:
-                    _main.GetWarehouse(Symbols.WarehouseA).SpawnCart();
+                    _main.AddCart(_main.GetWarehouse(Symbols.WarehouseA).SpawnCart());
                     break;
                 case 2:
-                    _main.GetWarehouse(Symbols.WarehouseB).SpawnCart();
+                    _main.AddCart(_main.GetWarehouse(Symbols.WarehouseB).SpawnCart());
                     break;
                 case 3:
-                    _main.GetWarehouse(Symbols.WarehouseC).SpawnCart();
+                    _main.AddCart(_main.GetWarehouse(Symbols.WarehouseC).SpawnCart());
                     break;
             }
         }
@@ -75,7 +75,7 @@ namespace Goudkoorts.Model.TimedEvents
         {
             foreach(Cart c in _main.GetAllCarts())
             {
-               // Move logic
+                c.Move();
             }
         }
 

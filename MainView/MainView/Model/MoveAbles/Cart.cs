@@ -19,6 +19,7 @@ namespace Goudkoorts.Model.MoveAbles
 
         public Cart(Symbols type)
         {
+            CameFrom = Direction.Left;
             this.Icon = (char)type;
         }
 
@@ -35,30 +36,54 @@ namespace Goudkoorts.Model.MoveAbles
             {
                 // went through all possible moves
                 if (newDirection.Equals(CameFrom))
-                    break;
+                    return;
                 else
                 {
-                    if(!(_moveTo is EmptyRail) && _moveTo != null)
+                    if (!(_moveTo is EmptyRail) && _moveTo != null)
                     {
-                        CheckForPossibleMove();
+                        if (CheckForPossibleMove(newDirection))
+                            return;
                     }
                 }
                 newDirection = (GetNextDirection(newDirection));
             }
         }
 
-        private void CheckForPossibleMove()
+        private bool CheckForPossibleMove(Direction newDirection)
         {
-            if (CartOnHold())
-                return;
-            if(_moveTo is Dock)
+            if (_moveTo is ISwitchRail)
+                if (_moveTo.IsOnHold(_currentRail))
+                    return true;
+                else
+                    MoveCart(newDirection);
+
+            if (_moveTo is NormalRail)
+            {
+                MoveCart(newDirection);
+                return true;
+            }
+            if (_moveTo is HoldingRail)
+            {
+                MoveCart(newDirection);
+                // set OnHoldingRail True
+                return true;
+            }
+            return true;
+
+            if (_moveTo is Dock)
             {
                 CheckForOtherCarts();
             }
-            if(_moveTo is HoldingRail)
-            {
-                // move to holdingRail
-            }
+            
+        }
+
+        private void MoveCart(Direction newDirection)
+        {
+            var temp = this;
+            this._currentRail.ContainsMoveableObject = null;
+            _moveTo.ContainsMoveableObject = temp;
+            temp._currentRail = _moveTo;
+            CameFrom = GetOpposite(newDirection);
         }
 
         /// <summary>
@@ -70,9 +95,7 @@ namespace Goudkoorts.Model.MoveAbles
             if (_moveTo is ISwitchRail)
             {
                 if (_moveTo.IsOnHold(_currentRail))
-                {
                     return true;
-                }
                 else
                     return false;
             }
@@ -86,7 +109,8 @@ namespace Goudkoorts.Model.MoveAbles
                 if (OppositeCartCanMove())
                 {
                     // move
-                } else
+                }
+                else
                 {
                     // GAME OVER
                 }
@@ -120,15 +144,15 @@ namespace Goudkoorts.Model.MoveAbles
             switch (lastMove)
             {
                 case Direction.Up:
+                    _moveTo = _currentRail.Next;
+                    return Direction.Right;
+                case Direction.Right:
                     _moveTo = _currentRail.Below;
                     return Direction.Down;
                 case Direction.Down:
                     _moveTo = _currentRail.Previous;
                     return Direction.Left;
                 case Direction.Left:
-                    _moveTo = _currentRail.Next;
-                    return Direction.Right;
-                case Direction.Right:
                     _moveTo = _currentRail.Above;
                     return Direction.Up;
                 default:
