@@ -83,7 +83,7 @@ namespace Goudkoorts.Model.MoveAbles
             }
         }
 
-        private Direction GetOpposite(Direction move)
+        public Direction GetOpposite(Direction move)
         {
             switch (move)
             {
