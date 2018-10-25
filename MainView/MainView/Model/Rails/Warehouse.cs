@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Goudkoorts.Enums;
 
 namespace Goudkoorts.Model.Rails
 {
@@ -39,6 +40,7 @@ namespace Goudkoorts.Model.Rails
         public Cart SpawnCart()
         {
             Cart c = new Cart(Symbols.FullCart);
+            c.CameFrom = Direction.Left;
             c.IsOnRail = Next;
 
           

@@ -23,9 +23,10 @@ namespace Goudkoorts.Model.TimedEvents
 
         public void Start()
         {
+           
             while (true)
             {
-                Thread.Sleep(3000);
+                Thread.Sleep(1000);
                 SpawnRandomCart();
                 MoveAllCarts();
             }

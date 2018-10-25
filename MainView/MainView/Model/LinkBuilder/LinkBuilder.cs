@@ -127,6 +127,7 @@ namespace Goudkoorts.Model.LinkBuilder
                     return new NormalRail(Symbols.CornerRailB);
                 case (char)Symbols.StraightRail:
                     return new NormalRail(Symbols.StraightRail);
+                
                 // warehouses
                 case (char)Symbols.WarehouseA:
                     Warehouse wA = new Warehouse(Symbols.WarehouseA);
