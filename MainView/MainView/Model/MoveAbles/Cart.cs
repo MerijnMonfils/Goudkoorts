@@ -71,7 +71,7 @@ namespace Goudkoorts.Model.MoveAbles
             {
                 _currentRail.Previous.ContainsMoveableObject = this;
                 _currentRail.ContainsMoveableObject = null;
-                _currentRail = _currentRail.Next;
+                _currentRail = _currentRail.Previous;
             }
 
             if (LastMove == Direction.Up)
