@@ -39,6 +39,8 @@ namespace MainView.Model.Rails
         {
             if (LockedSwitch)
                 return;
+            if (ContainsMoveableObject != null)
+                return;
 
             SwitchHold();
 

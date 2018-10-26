@@ -94,6 +94,7 @@ namespace Goudkoorts
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public void DrawSwitch(string text)

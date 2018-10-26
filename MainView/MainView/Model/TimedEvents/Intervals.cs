@@ -15,44 +15,40 @@ namespace Goudkoorts.Model.TimedEvents
         private MainModel _main;
         private InputViewVM _input;
         private Random _random;
-        private readonly int _time = 1000;
+        private readonly int _time = 2000;
+        private int _timeLeft;
         private bool _spawn = false;
-
-        System.Threading.Thread myThread;
-
-
-
-        public Intervals(MainModel main, InputViewVM input)
+        
+        public Intervals (MainModel main, InputViewVM input)
         {
-            
             this._main = main;
             this._input = input;
             _random = new Random();
-           
-
+            _timeLeft = _time;
         }
 
         public void Start()
         {
-      
             while (true)
             {
-                
+                if (GameOver())
+                    return;
 
-             
-
-                Thread.Sleep(_time);
+                Thread.Sleep(_timeLeft);
+                SlowDownTime();
                 SpawnRandomCart();
                 CheckToSpawnShip();
                 MoveAllShips();
                 MoveAllCarts();
                 _input.Redraw(_main);
-
-                if (GameOver())
-                {
-                    return;
-                }
             }
+        }
+
+        private void SlowDownTime()
+        {
+            if (_timeLeft < 500)
+                return;
+            _timeLeft = _timeLeft - 30;
         }
 
         private void MoveAllShips()

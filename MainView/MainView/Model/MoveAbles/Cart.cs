@@ -47,9 +47,9 @@ namespace Goudkoorts.Model.MoveAbles
                     return;
 
                 if (!(_moveTo is EmptyRail) && _moveTo != null)
-                        if (CheckForPossibleMove(newDirection))
-                            return;
-                
+                    if (CheckForPossibleMove(newDirection))
+                        return;
+
                 newDirection = (GetNextDirection(newDirection));
             }
         }
@@ -59,15 +59,15 @@ namespace Goudkoorts.Model.MoveAbles
             //Rangrail colission
             if (IsOnRail.Previous.ContainsMoveableObject is Cart && IsOnRail.Previous is HoldingRail && !(IsOnRail is HoldingRail))
             {
-               return true;
+                return true;
             }
-          
+
             //switch colission
-            if (IsOnRail.Next != null &&  IsOnRail.Next.ContainsMoveableObject is Cart && IsOnRail.Next.Below is SwitchConversion ||
+            if (IsOnRail.Next != null && IsOnRail.Next.ContainsMoveableObject is Cart && IsOnRail.Next.Below is SwitchConversion ||
                 IsOnRail.Next != null && IsOnRail.Next.ContainsMoveableObject is Cart && IsOnRail.Next.Below is SwitchDiversion)
             {
                 return true;
-             }
+            }
 
             if (IsOnRail.Next != null && IsOnRail.Next.ContainsMoveableObject is Cart && IsOnRail.Next.Above is SwitchConversion ||
               IsOnRail.Next != null && IsOnRail.Next.ContainsMoveableObject is Cart && IsOnRail.Next.Above is SwitchDiversion)
@@ -80,16 +80,20 @@ namespace Goudkoorts.Model.MoveAbles
             {
                 return true;
             }
-
             return false;
         }
         private bool CheckForPossibleMove(Direction newDirection)
         {
             if (_moveTo is ISwitchRail)
                 if (_moveTo.IsOnHold(_currentRail))
-                    return true;
+                    return false;
+                else if (_currentRail.IsOnHold(_moveTo))
+                    return false;
                 else
+                {
                     MoveCart(newDirection);
+                    return true;
+                }
 
             if (_moveTo is NormalRail)
             {
@@ -99,16 +103,15 @@ namespace Goudkoorts.Model.MoveAbles
             if (_moveTo is HoldingRail)
             {
                 MoveCart(newDirection);
-                // set OnHoldingRail True
                 return true;
             }
-            return true;
-
             if (_moveTo is Dock)
             {
-                CheckForOtherCarts();
+                MoveCart(newDirection);
+                Type = (char)Symbols.EmptyCart;
+                return true;
             }
-            
+            return false;
         }
 
         private void MoveCart(Direction newDirection)
@@ -118,42 +121,6 @@ namespace Goudkoorts.Model.MoveAbles
             _moveTo.ContainsMoveableObject = temp;
             temp._currentRail = _moveTo;
             CameFrom = GetOpposite(newDirection);
-        }
-
-        /// <summary>
-        /// Will check for the current cart if it is on a rail that is on a hold.
-        /// </summary>
-        /// <returns>true if the cart is on hold</returns>
-        private bool CartOnHold()
-        {
-            if (_moveTo is ISwitchRail)
-            {
-                if (_moveTo.IsOnHold(_currentRail))
-                    return true;
-                else
-                    return false;
-            }
-            return false;
-        }
-
-        private void CheckForOtherCarts()
-        {
-            if (_moveTo.ContainsMoveableObject != null)
-            {
-                if (OppositeCartCanMove())
-                {
-                    // move
-                }
-                else
-                {
-                    // GAME OVER
-                }
-            }
-        }
-
-        public bool OppositeCartCanMove()
-        {
-            return true;
         }
 
         public Direction GetOpposite(Direction move)
