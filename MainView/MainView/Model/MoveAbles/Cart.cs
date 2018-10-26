@@ -37,31 +37,18 @@ namespace Goudkoorts.Model.MoveAbles
             {
 
                 if (IsOnRail is HoldingRail && IsOnRail.Next == null)
-                {
-                    
                     return;
-                }
-
 
                 if (IsOnRail is HoldingRail && IsOnRail.Previous.ContainsMoveableObject is Cart)
-                {
                     return;
-                }
 
-                 
-
-              
-                
                 // went through all possible moves
                 if (newDirection.Equals(CameFrom))
                     return;
-                
-                
+
                 if (!(_moveTo is EmptyRail) && _moveTo != null)
-                    {
                         if (CheckForPossibleMove(newDirection))
                             return;
-                    }
                 
                 newDirection = (GetNextDirection(newDirection));
             }
@@ -97,8 +84,6 @@ namespace Goudkoorts.Model.MoveAbles
             return false;
         }
         private bool CheckForPossibleMove(Direction newDirection)
-
-        
         {
             if (_moveTo is ISwitchRail)
                 if (_moveTo.IsOnHold(_currentRail))
