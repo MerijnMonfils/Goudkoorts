@@ -16,19 +16,30 @@ namespace Goudkoorts.Model.TimedEvents
         private InputViewVM _input;
         private Random _random;
         private readonly int _time = 1000;
+        private bool _spawn = false;
+
+        System.Threading.Thread myThread;
+
+
 
         public Intervals(MainModel main, InputViewVM input)
         {
+            
             this._main = main;
             this._input = input;
             _random = new Random();
+           
+
         }
 
         public void Start()
         {
+      
             while (true)
             {
                 Thread.Sleep(_time);
+
+              
                 SpawnRandomCart();
                 CheckToSpawnShip();
                 MoveAllShips();
@@ -55,21 +66,38 @@ namespace Goudkoorts.Model.TimedEvents
 
         private void SpawnRandomCart()
         {
-            int letter = _random.Next(1, 4);
-
-            switch (letter)
+            if (!_spawn)
             {
-                case 1:
-                    _main.AddCart(_main.GetWarehouse(Symbols.WarehouseA).SpawnCart());
-                    break;
-                case 2:
-                    _main.AddCart(_main.GetWarehouse(Symbols.WarehouseB).SpawnCart());
-                    break;
-                case 3:
-                    _main.AddCart(_main.GetWarehouse(Symbols.WarehouseC).SpawnCart());
-                    break;
+                if (_random.Next(6) == 2)
+                {
+                    //If the integer is equal to 2, Spawn a cart. Else, keep waiting.
+                    _spawn = true;
+                }
+
             }
+
+            int letter = _random.Next(1, 4);
+                if (_spawn)
+                {
+                    switch (letter)
+                    {
+                        case 1:
+                            _main.AddCart(_main.GetWarehouse(Symbols.WarehouseA).SpawnCart());
+                            _spawn = false;
+                            break;
+                        case 2:
+                            _main.AddCart(_main.GetWarehouse(Symbols.WarehouseB).SpawnCart());
+                            _spawn = false;
+                            break;
+                        case 3:
+                            _spawn = false;
+                            _main.AddCart(_main.GetWarehouse(Symbols.WarehouseC).SpawnCart());
+                            break;
+                    }
+                }
+         
         }
+            
 
         private void MoveAllCarts()
         {
