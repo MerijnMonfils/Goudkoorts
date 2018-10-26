@@ -14,5 +14,6 @@ namespace Goudkoorts.Model.MoveAbles
         Direction CameFrom { get; set; }
         char Type { get; set; }
         void Move();
+        Direction GetOpposite(Direction move);
     }
 }

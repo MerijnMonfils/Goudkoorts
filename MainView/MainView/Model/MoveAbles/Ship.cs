@@ -30,7 +30,7 @@ namespace Goudkoorts.Model.MoveAbles
             if (_currentRail is Dock)
                 return;
 
-            int direction = _random.Next(1, 5);
+            int direction = _random.Next(1, 6);
 
             switch (direction)
             {
@@ -47,11 +47,16 @@ namespace Goudkoorts.Model.MoveAbles
                     break;
                 case 3: // left
                     CameFrom = GetOpposite(Direction.Left);
+                    if (_currentRail.Previous.Previous == null)
+                        Move();
                     Move(_currentRail.Previous);
                     break;
                 case 4: // right
                     CameFrom = GetOpposite(Direction.Right);
                     Move(_currentRail.Next);
+                    break;
+                default:
+                    Move(_currentRail.Below);
                     break;
             }
         }
@@ -59,22 +64,26 @@ namespace Goudkoorts.Model.MoveAbles
         private void Move(IRail move)
         {
             if (move == null)
-                return;
-            if (move is Dock)
+                Move();
+            if (!(move is Dock) && !(move is ShipRail))
+                Move();
+
+            if (move is Dock || move is ShipRail)
             {
-                move.ContainsMoveableObject = this;
-                this._currentRail = move;
+                var temp = this;
                 this._currentRail.ContainsMoveableObject = null;
-            }
-            else if (move is ShipRail && !(_currentRail is Dock))
-            {
-                move.ContainsMoveableObject = this;
-                this._currentRail = move;
-                this._currentRail.ContainsMoveableObject = null;
+                move.ContainsMoveableObject = temp;
+                temp._currentRail = move;
+                if(move is Dock)
+                {
+                    Dock d = (Dock)move;
+                    d.ContainsShip = this;
+                    d.SetSideIcons();
+                }
             }
         }
 
-        private Direction GetOpposite(Direction move)
+        public Direction GetOpposite(Direction move)
         {
             switch (move)
             {

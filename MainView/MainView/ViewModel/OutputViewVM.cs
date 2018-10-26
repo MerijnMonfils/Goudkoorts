@@ -51,7 +51,9 @@ namespace Goudkoorts.ViewModel
                     _view.WriteLine("");
                     while (columns != null)
                     {
-                        if (columns.ContainsMoveableObject != null)
+                        if (columns is Dock)
+                            _view.Write(columns.Type + "", row);
+                        else if (columns.ContainsMoveableObject != null)
                             _view.DrawMoveable(columns.ContainsMoveableObject.Type + "");
                         else if (columns is ISwitchRail)
                             _view.DrawSwitch(columns.Type + "");

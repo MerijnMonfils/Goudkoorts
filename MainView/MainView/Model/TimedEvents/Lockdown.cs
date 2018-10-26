@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Goudkoorts.Model.TimedEvents
 {
-    class Countdown
+    class Lockdown
     {
         private MainModel _main;
         private InputViewVM _input;
         private readonly int _time = 5000;
         private int _counter;
 
-        public Countdown(MainModel mainModel, InputViewVM input)
+        public Lockdown(MainModel mainModel, InputViewVM input)
         {
             _main = mainModel;
             _input = input;

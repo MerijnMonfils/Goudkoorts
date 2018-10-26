@@ -39,6 +39,7 @@ namespace Goudkoorts.Model.Rails
         public Cart SpawnCart()
         {
             Cart c = new Cart(Symbols.FullCart);
+            c.IsOnRail = this.Next;
             Next.ContainsMoveableObject = c;
             return c;
         }

@@ -21,7 +21,7 @@ namespace Goudkoorts.Model
         private List<Cart> _carts;
 
         private Thread _game, _counter;
-        private Countdown _countdown;
+        private Lockdown _lockdown;
         private Intervals _intervals;
 
         private InputViewVM _input;
@@ -69,8 +69,8 @@ namespace Goudkoorts.Model
 
         private void CreateCounter(MainModel main, InputViewVM input)
         {
-            _countdown = new Countdown(main, input);
-            _countdown.Start();
+            _lockdown = new Lockdown(main, input);
+            _lockdown.Start();
         }        
 
         public void AddSwitch(int pos, ISwitchRail obj)

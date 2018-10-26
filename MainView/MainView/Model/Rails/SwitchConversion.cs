@@ -40,12 +40,21 @@ namespace MainView.Model.Rails
         {
             if (LockedSwitch)
                 return;
-            // SWITCH CONNECTIONS AND ONHOLD
+
+            SwitchHold();
 
             if (Type.Equals((char)Symbols.SwitchDown))
                 Type = (char)Symbols.SwitchUp;
             else
                 Type = (char)Symbols.SwitchDown;
+        }
+
+        private void SwitchHold()
+        {
+            if (OnHold == Above)
+                OnHold = Below;
+            else
+                OnHold = Above;
         }
 
         public bool IsOnHold(IRail obj)
