@@ -34,22 +34,37 @@ namespace Goudkoorts.Model.MoveAbles
             var newDirection = (GetNextDirection(CameFrom));
             while (true)
             {
+
+                if (IsOnRail is HoldingRail && IsOnRail.Next == null)
+                {
+                    
+                    return;
+                }
+
+
+                if (IsOnRail is HoldingRail && IsOnRail.Previous.ContainsMoveableObject is Cart)
+                {
+                    return;
+                }
+                
                 // went through all possible moves
                 if (newDirection.Equals(CameFrom))
                     return;
-                else
-                {
-                    if (!(_moveTo is EmptyRail) && _moveTo != null)
+                
+                
+                if (!(_moveTo is EmptyRail) && _moveTo != null)
                     {
                         if (CheckForPossibleMove(newDirection))
                             return;
                     }
-                }
+                
                 newDirection = (GetNextDirection(newDirection));
             }
         }
 
         private bool CheckForPossibleMove(Direction newDirection)
+
+        
         {
             if (_moveTo is ISwitchRail)
                 if (_moveTo.IsOnHold(_currentRail))
