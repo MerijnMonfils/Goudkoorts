@@ -48,10 +48,7 @@ namespace Goudkoorts.Model.MoveAbles
                     return;
                 }
 
-                if (IsOnRail.Previous.ContainsMoveableObject is Cart && IsOnRail.Previous is HoldingRail && !(IsOnRail is HoldingRail))
-                {
-                    return;
-                }   
+                 
 
               
                 
@@ -70,6 +67,35 @@ namespace Goudkoorts.Model.MoveAbles
             }
         }
 
+        public bool GameOverChecks()
+        {
+            //Rangrail colission
+            if (IsOnRail.Previous.ContainsMoveableObject is Cart && IsOnRail.Previous is HoldingRail && !(IsOnRail is HoldingRail))
+            {
+               return true;
+            }
+          
+            //switch colission
+            if (IsOnRail.Next != null &&  IsOnRail.Next.ContainsMoveableObject is Cart && IsOnRail.Next.Below is SwitchConversion ||
+                IsOnRail.Next != null && IsOnRail.Next.ContainsMoveableObject is Cart && IsOnRail.Next.Below is SwitchDiversion)
+            {
+                return true;
+             }
+
+            if (IsOnRail.Next != null && IsOnRail.Next.ContainsMoveableObject is Cart && IsOnRail.Next.Above is SwitchConversion ||
+              IsOnRail.Next != null && IsOnRail.Next.ContainsMoveableObject is Cart && IsOnRail.Next.Above is SwitchDiversion)
+            {
+                return true;
+            }
+
+            if (IsOnRail.Next != null && IsOnRail.Next.ContainsMoveableObject is Cart && IsOnRail.Next.Next is SwitchConversion ||
+           IsOnRail.Next != null && IsOnRail.Next.ContainsMoveableObject is Cart && IsOnRail.Next.Next is SwitchDiversion)
+            {
+                return true;
+            }
+
+            return false;
+        }
         private bool CheckForPossibleMove(Direction newDirection)
 
         

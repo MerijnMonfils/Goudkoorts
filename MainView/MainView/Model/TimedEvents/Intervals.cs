@@ -15,7 +15,7 @@ namespace Goudkoorts.Model.TimedEvents
         private MainModel _main;
         private InputViewVM _input;
         private Random _random;
-        private readonly int _time = 100;
+        private readonly int _time = 1000;
         private bool _spawn = false;
 
         System.Threading.Thread myThread;
@@ -37,14 +37,21 @@ namespace Goudkoorts.Model.TimedEvents
       
             while (true)
             {
-                Thread.Sleep(_time);
+                
 
-              
+             
+
+                Thread.Sleep(_time);
                 SpawnRandomCart();
                 CheckToSpawnShip();
                 MoveAllShips();
                 MoveAllCarts();
                 _input.Redraw(_main);
+
+                if (GameOver())
+                {
+                    return;
+                }
             }
         }
 
@@ -53,6 +60,7 @@ namespace Goudkoorts.Model.TimedEvents
             foreach(Ship s in _main.GetAllShips())
             {
                 s.Move();
+                
             }
         }
 
@@ -104,7 +112,20 @@ namespace Goudkoorts.Model.TimedEvents
             foreach(Cart c in _main.GetAllCarts())
             {
                 c.Move();
+                
             }
+        }
+        private bool GameOver() {
+            foreach (Cart c in _main.GetAllCarts())
+            {
+                if (c.GameOverChecks())
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
         }
 
         public int GetTime()
