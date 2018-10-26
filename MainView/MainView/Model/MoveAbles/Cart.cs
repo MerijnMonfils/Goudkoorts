@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Goudkoorts.Enum;
@@ -46,6 +47,13 @@ namespace Goudkoorts.Model.MoveAbles
                 {
                     return;
                 }
+
+                if (IsOnRail.Previous.ContainsMoveableObject is Cart && IsOnRail.Previous is HoldingRail && !(IsOnRail is HoldingRail))
+                {
+                    return;
+                }   
+
+              
                 
                 // went through all possible moves
                 if (newDirection.Equals(CameFrom))

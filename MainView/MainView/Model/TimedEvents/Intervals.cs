@@ -15,7 +15,7 @@ namespace Goudkoorts.Model.TimedEvents
         private MainModel _main;
         private InputViewVM _input;
         private Random _random;
-        private readonly int _time = 1000;
+        private readonly int _time = 100;
         private bool _spawn = false;
 
         System.Threading.Thread myThread;
