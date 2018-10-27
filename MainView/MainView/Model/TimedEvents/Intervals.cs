@@ -29,6 +29,7 @@ namespace Goudkoorts.Model.TimedEvents
 
         public void Start()
         {
+
             while (true)
             {
                 if (GameOver())
@@ -72,7 +73,7 @@ namespace Goudkoorts.Model.TimedEvents
         {
             if (!_spawn)
             {
-                if (_random.Next(4) == 2)
+                if (_random.Next(8) == 2)
                 {
                     //If the integer is equal to 2, Spawn a cart. Else, keep waiting.
                     _spawn = true;

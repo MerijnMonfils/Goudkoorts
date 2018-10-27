@@ -35,6 +35,12 @@ namespace Goudkoorts.Model.MoveAbles
             var newDirection = (GetNextDirection(CameFrom));
             while (true)
             {
+
+                if (IsOnRail.Previous == null && IsOnRail.ContainsMoveableObject is Cart )
+                {
+                    IsOnRail.ContainsMoveableObject = null;
+                    return;
+                }
                 // went through all possible moves
                 if (newDirection.Equals(CameFrom))
                     return;
@@ -56,6 +62,10 @@ namespace Goudkoorts.Model.MoveAbles
 
         public bool GameOverChecks()
         {
+            if (IsOnRail.Previous == null)
+            {
+                return false;
+            }
             //Rangrail colission
             if (IsOnRail.Previous.ContainsMoveableObject is Cart && IsOnRail.Previous is HoldingRail && !(IsOnRail is HoldingRail))
             {
