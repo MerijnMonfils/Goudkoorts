@@ -25,9 +25,14 @@ namespace Goudkoorts.Model.MoveAbles
 
         public char Type { get { return Icon; } set { Icon = value; } }
 
+        public bool IsMovingFromDock { private get; set; }
+        public bool DestroyShip { get; private set; }
+
         public void Move()
         {
             if (_currentRail is Dock)
+                return;
+            if (IsMovingAway())
                 return;
 
             int direction = _random.Next(1, 6);
@@ -61,6 +66,33 @@ namespace Goudkoorts.Model.MoveAbles
             }
         }
 
+        public bool CheckForDestroy()
+        {
+            if (DestroyShip)
+                return true;
+            return false;
+        }
+
+        private bool IsMovingAway()
+        {
+            if (IsMovingFromDock)
+            {
+                if (_currentRail.Next is ShipRail)
+                {
+                    var temp = this;
+                    this._currentRail.ContainsMoveableObject = null;
+                    _currentRail.Next.ContainsMoveableObject = temp;
+                    temp.IsOnRail = _currentRail.Next;
+                } else
+                {
+                    this._currentRail.ContainsMoveableObject = null;
+                    this.DestroyShip = true;
+                }
+                return true;
+            }
+            return false;
+        }
+
         private void Move(IRail move)
         {
             if (move == null)
@@ -74,18 +106,33 @@ namespace Goudkoorts.Model.MoveAbles
                 this._currentRail.ContainsMoveableObject = null;
                 move.ContainsMoveableObject = temp;
                 temp._currentRail = move;
+
                 if (move is Dock)
                 {
                     Dock d = (Dock)move;
                     d.ContainsShip = this;
+                    _currentRail = d;
                     d.SetSideIcons();
                 }
-                else if (move.Below is Dock)
+            }
+            try
+            {
+                if (move.Below is Dock && move is ShipRail)
                 {
+                    var temp = this;
+                    this._currentRail.ContainsMoveableObject = null;
+                    move.Below.ContainsMoveableObject = temp;
+                    temp._currentRail = move.Below;
                     Dock d = (Dock)move.Below;
                     d.ContainsShip = this;
+                    _currentRail = d;
                     d.SetSideIcons();
+
                 }
+            }
+            catch (Exception e)
+            {
+                Move();
             }
         }
 

@@ -84,12 +84,33 @@ namespace Goudkoorts.Model.Rails
 
         public void UpdateShip()
         {
+            if (this.ContainsShip == null)
+                return;
             Score++;
             if (Score == 8)
-            {
-                this.ContainsShip = null;
-            }
+                InitiateMoveAway();
             this.Above.Type = char.Parse(Score.ToString());
+        }
+
+        private void InitiateMoveAway()
+        {
+            if (this.ContainsShip == null)
+                return;
+            Ship s = (Ship)this.ContainsShip;
+            s.Type = (char)Symbols.ShipFull;
+            s.IsMovingFromDock = true;
+            this.ContainsShip = null;
+            this.Above.ContainsMoveableObject = s;
+            s.IsOnRail = this.Above;
+            RemoveSideIcons();
+        }
+
+        private void RemoveSideIcons()
+        {
+            this.Above.Next.Type = (char)Symbols.Water;
+            this.Above.Previous.Type = (char)Symbols.Water;
+            this.Score = 0;
+            this.Above.Type = (char)Symbols.Water;
         }
 
         public void SetSideIcons()

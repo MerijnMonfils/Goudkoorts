@@ -72,6 +72,11 @@ namespace Goudkoorts.Model
             _counter.Start();
         }
 
+        public void RemoveShip(Ship s)
+        {
+            _ships.Remove(s);
+        }
+
         private void StartGame(MainModel main, InputViewVM input)
         {
             _intervals = new Intervals(main, input, _score);

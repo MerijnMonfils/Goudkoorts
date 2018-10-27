@@ -14,7 +14,7 @@ namespace Goudkoorts.Model.TimedEvents
         private InputViewVM _input;
         private Score.Score _score;
         private Random _random;
-        private readonly int _time = 500;
+        private readonly int _time = 1000;
         private int _timeLeft;
         private bool _spawn = false;
 
@@ -29,7 +29,6 @@ namespace Goudkoorts.Model.TimedEvents
 
         public void Start()
         {
-
             while (true)
             {
                 if (GameOver())
@@ -56,13 +55,17 @@ namespace Goudkoorts.Model.TimedEvents
         {
             foreach (Ship s in _main.GetAllShips())
             {
-                if(s.IsOnRail is Dock)
+                if (s.IsOnRail is Dock)
                 {
                     Dock d = (Dock)s.IsOnRail;
-                    if(d.Score == 8)
+                    if (d.Score == 8)
                         _score.SetScore(10);
                 }
                 s.Move();
+                if (s.CheckForDestroy())
+                {
+                    _main.RemoveShip(s);
+                }
             }
         }
 
@@ -112,7 +115,7 @@ namespace Goudkoorts.Model.TimedEvents
         {
             foreach (Cart c in _main.GetAllCarts())
             {
-                if(c.IsOnRail.Previous is Dock)
+                if (c.IsOnRail.Previous is Dock)
                 {
                     Dock d = (Dock)c.IsOnRail.Previous;
                     if (d.ContainsShip != null)
