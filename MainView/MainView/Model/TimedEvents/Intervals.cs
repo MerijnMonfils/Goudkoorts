@@ -14,7 +14,7 @@ namespace Goudkoorts.Model.TimedEvents
         private InputViewVM _input;
         private Score.Score _score;
         private Random _random;
-        private readonly int _time = 1000;
+        private readonly int _time = 2000;
         private int _timeLeft;
         private bool _spawn = false;
 
