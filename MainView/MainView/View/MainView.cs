@@ -35,6 +35,12 @@ namespace Goudkoorts
             Console.Clear();
         }
 
+        public void DrawPoints(int amount)
+        {
+            Console.Write("\n");
+            this.WriteLineInCenter("Score: " + amount, true);
+        }
+
         // Methods to draw in center of the console
         private void WriteLineInCenter(string text, bool space)
         {

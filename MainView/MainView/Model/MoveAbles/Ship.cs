@@ -74,9 +74,15 @@ namespace Goudkoorts.Model.MoveAbles
                 this._currentRail.ContainsMoveableObject = null;
                 move.ContainsMoveableObject = temp;
                 temp._currentRail = move;
-                if(move is Dock)
+                if (move is Dock)
                 {
                     Dock d = (Dock)move;
+                    d.ContainsShip = this;
+                    d.SetSideIcons();
+                }
+                else if (move.Below is Dock)
+                {
+                    Dock d = (Dock)move.Below;
                     d.ContainsShip = this;
                     d.SetSideIcons();
                 }

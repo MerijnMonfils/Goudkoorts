@@ -1,6 +1,4 @@
 ﻿using Goudkoorts.Model;
-using Goudkoorts.Model.FileReading;
-using Goudkoorts.Model.LinkBuilder;
 using System;
 
 namespace Goudkoorts.ViewModel
@@ -30,10 +28,8 @@ namespace Goudkoorts.ViewModel
         private void StartPlaying()
         {
             _mainModel = new MainModel(this);
-            FileReader r = new FileReader();
-            LinkBuilder builder = new LinkBuilder(r.LoadLevel(), _mainModel);
+            _mainModel.StartAll();
             _output.RedrawLevel(_mainModel);
-            _mainModel.StartThreads();
             _output.GameListener();
         }
 

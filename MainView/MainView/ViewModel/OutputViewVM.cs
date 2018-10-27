@@ -40,7 +40,7 @@ namespace Goudkoorts.ViewModel
             {
                 _view.Clear();
                 _view.ShowTitle();
-
+                _view.DrawPoints(_mainModel.GetScore());
                 var rows = _mainModel.EndOflevelLink;
                 var columns = _mainModel.EndOflevelLink;
 

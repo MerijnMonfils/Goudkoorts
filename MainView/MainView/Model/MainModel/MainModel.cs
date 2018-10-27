@@ -4,7 +4,8 @@ using Goudkoorts.Model.Rails;
 using Goudkoorts.Model.TimedEvents;
 using System.Collections.Generic;
 using System.Threading;
-using System.Linq;
+using Goudkoorts.Model.FileReading;
+using Goudkoorts.Model.LinkBuilder;
 using Goudkoorts.ViewModel;
 using System;
 
@@ -12,7 +13,7 @@ namespace Goudkoorts.Model
 {
     class MainModel
     {
-        private IRail FinishRail;
+        public IRail EndOflevelLink { get; set; }
         public bool IsLocked { get; set; }
 
         private Dictionary<int, ISwitchRail> _switches;
@@ -26,6 +27,7 @@ namespace Goudkoorts.Model
         private Intervals _intervals;
 
         private InputViewVM _input;
+        private Score.Score _score;
 
         public MainModel(InputViewVM input)
         {
@@ -37,18 +39,17 @@ namespace Goudkoorts.Model
             _input = input;
         }
 
-        public IRail EndOflevelLink
+        public int GetScore()
         {
-            get
-            {
-                return FinishRail;
-            }
-            set
-            {
-                if (FinishRail != null)
-                    return;
-                FinishRail = value;
-            }
+            return _score.GetScore();
+        }
+
+        public void StartAll()
+        {
+            FileReader r = new FileReader();
+            LinkBuilder.LinkBuilder builder = new LinkBuilder.LinkBuilder(r.LoadLevel(), this);
+            _score = new Score.Score();
+            this.StartThreads();
         }
 
         public void AddCart(Cart cart)
@@ -73,7 +74,7 @@ namespace Goudkoorts.Model
 
         private void StartGame(MainModel main, InputViewVM input)
         {
-            _intervals = new Intervals(main, input);
+            _intervals = new Intervals(main, input, _score);
             _intervals.Start();
         }
 

@@ -100,6 +100,8 @@ namespace Goudkoorts.Model.MoveAbles
             if (_moveTo is Dock)
             {
                 MoveCart(newDirection);
+                Dock d = (Dock)_currentRail;
+                d.UpdateShip();
                 Type = (char)Symbols.EmptyCart;
                 return true;
             }
