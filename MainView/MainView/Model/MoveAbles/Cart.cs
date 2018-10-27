@@ -30,20 +30,22 @@ namespace Goudkoorts.Model.MoveAbles
 
         public char Type { get { return Icon; } set { Icon = (char)value; } }
 
+        public bool DestroyCart {get; private set;}
+
         public void Move()
         {
             var newDirection = (GetNextDirection(CameFrom));
             while (true)
             {
-
-                if (IsOnRail.Previous == null && IsOnRail.ContainsMoveableObject is Cart )
-                {
-                    IsOnRail.ContainsMoveableObject = null;
-                    return;
-                }
                 // went through all possible moves
                 if (newDirection.Equals(CameFrom))
                     return;
+
+                if (IsOnRail.Previous == null && this.Type.Equals((char)Symbols.EmptyCart))
+                {
+                    DestroyCart = true;
+                    return;
+                }
 
                 if (IsOnRail is HoldingRail && IsOnRail.Next == null)
                     return;
@@ -62,10 +64,6 @@ namespace Goudkoorts.Model.MoveAbles
 
         public bool GameOverChecks()
         {
-            if (IsOnRail.Previous == null)
-            {
-                return false;
-            }
             //Rangrail colission
             if (IsOnRail.Previous.ContainsMoveableObject is Cart && IsOnRail.Previous is HoldingRail && !(IsOnRail is HoldingRail))
             {
@@ -92,6 +90,7 @@ namespace Goudkoorts.Model.MoveAbles
             }
             return false;
         }
+
         private bool CheckForPossibleMove(Direction newDirection)
         {
             if (MoveToSwitch(newDirection))
@@ -115,6 +114,13 @@ namespace Goudkoorts.Model.MoveAbles
                 Type = (char)Symbols.EmptyCart;
                 return true;
             }
+            return false;
+        }
+
+        public bool CheckForDestroy()
+        {
+            if (DestroyCart)
+                return true;
             return false;
         }
 

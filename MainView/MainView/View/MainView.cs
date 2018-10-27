@@ -95,6 +95,11 @@ namespace Goudkoorts
             WriteLineInCenter(" " + (char)Symbols.Dock + " - Kade ", true);
         }
 
+        public void ShowGameOver()
+        {
+            this.WriteLineInCenter("YOU LOST! GAME OVER!", true);
+        }
+
         // Draw methods for game
         public void DrawMoveable(string text)
         {
@@ -135,6 +140,11 @@ namespace Goudkoorts
         public void GameListener()
         {
             _input.GameControls(Console.ReadKey().Key);
+        }
+        
+        public void GameOver()
+        {
+            _input.GameOver(Console.ReadKey().Key);
         }
     }
 }

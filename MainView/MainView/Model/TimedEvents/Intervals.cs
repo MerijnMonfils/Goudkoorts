@@ -31,15 +31,15 @@ namespace Goudkoorts.Model.TimedEvents
         {
             while (true)
             {
-                if (GameOver())
-                    return;
 
-                SpawnRandomCart();
                 Thread.Sleep(_timeLeft);
+                SpawnRandomCart();
                 SlowDownTime();
                 CheckToSpawnShip();
                 MoveAllShips();
                 MoveAllCarts();
+                if (GameOver())
+                    _input.DrawGameOver(_main);
                 _input.Redraw(_main);
             }
         }
@@ -81,7 +81,7 @@ namespace Goudkoorts.Model.TimedEvents
         {
             if (!_spawn)
             {
-                if (_random.Next(8) == 2)
+                if (_random.Next(4) == 2)
                 {
                     //If the integer is equal to 2, Spawn a cart. Else, keep waiting.
                     _spawn = true;
@@ -122,17 +122,17 @@ namespace Goudkoorts.Model.TimedEvents
                         _score.SetScore(1);
                 }
                 c.Move();
+                if (c.CheckForDestroy())
+                    _main.RemoveCart(c);
             }
         }
+
         private bool GameOver()
         {
             foreach (Cart c in _main.GetAllCarts())
             {
                 if (c.GameOverChecks())
-                {
                     return true;
-                }
-
             }
             return false;
         }

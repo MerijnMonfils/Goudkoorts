@@ -72,6 +72,12 @@ namespace Goudkoorts.Model
             _counter.Start();
         }
 
+        public void StopThreads()
+        {
+            _game.Abort();
+            _counter.Abort();
+        }
+
         public void RemoveShip(Ship s)
         {
             _ships.Remove(s);

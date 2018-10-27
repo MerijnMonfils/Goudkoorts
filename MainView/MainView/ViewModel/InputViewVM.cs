@@ -25,6 +25,13 @@ namespace Goudkoorts.ViewModel
             _output.StartMenuListener();
         }
 
+        public void GameOver(ConsoleKey input)
+        {
+            if (input.Equals(ConsoleKey.Escape))
+                Environment.Exit(0);
+            _output.GameOver();
+        }
+
         private void StartPlaying()
         {
             _mainModel = new MainModel(this);
@@ -66,6 +73,13 @@ namespace Goudkoorts.ViewModel
             }
             _output.RedrawLevel(_mainModel);
             _output.GameListener();
+        }
+
+        public void DrawGameOver(MainModel main)
+        {
+            _output.DrawGameOver(main);
+            main.StopThreads();
+            _output.GameOver();
         }
 
         public void Redraw(MainModel main)

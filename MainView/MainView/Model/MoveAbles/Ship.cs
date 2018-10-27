@@ -35,7 +35,7 @@ namespace Goudkoorts.Model.MoveAbles
             if (IsMovingAway())
                 return;
 
-            int direction = _random.Next(1, 6);
+            int direction = _random.Next(1, 8);
 
             switch (direction)
             {

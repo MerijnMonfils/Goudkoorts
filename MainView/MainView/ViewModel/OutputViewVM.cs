@@ -34,6 +34,11 @@ namespace Goudkoorts.ViewModel
             _view.MenuListener();
         }
 
+        public void GameOver()
+        {
+            _view.GameOver();
+        }
+
         public void RedrawLevel(MainModel _mainModel)
         {
             lock (syncLock)
@@ -69,6 +74,39 @@ namespace Goudkoorts.ViewModel
                 _view.ShowControls(_mainModel.IsLocked);
                 _view.ShowLegenda();
             }
+        }
+
+        public void DrawGameOver(MainModel _mainModel)
+        {
+            _view.Clear();
+            _view.ShowTitle();
+            _view.DrawPoints(_mainModel.GetScore());
+            var rows = _mainModel.EndOflevelLink;
+            var columns = _mainModel.EndOflevelLink;
+
+            int row = 0;
+
+            while (rows != null)
+            {
+                _view.WriteLine("");
+                while (columns != null)
+                {
+                    if (columns is Dock)
+                        _view.Write(columns.Type + "", row);
+                    else if (columns.ContainsMoveableObject != null)
+                        _view.DrawMoveable(columns.ContainsMoveableObject.Type + "");
+                    else if (columns is ISwitchRail)
+                        _view.DrawSwitch(columns.Type + "");
+                    else
+                        _view.Write(columns.Type + "", row);
+                    columns = columns.Next;
+                }
+                rows = rows.Below;
+                columns = rows;
+                row++;
+            }
+            _view.WriteLine("\n");
+            _view.ShowGameOver();
         }
 
         public void GameListener()
