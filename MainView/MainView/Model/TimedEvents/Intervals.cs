@@ -18,8 +18,8 @@ namespace Goudkoorts.Model.TimedEvents
         private readonly int _time = 2000;
         private int _timeLeft;
         private bool _spawn = false;
-        
-        public Intervals (MainModel main, InputViewVM input)
+
+        public Intervals(MainModel main, InputViewVM input)
         {
             this._main = main;
             this._input = input;
@@ -34,9 +34,9 @@ namespace Goudkoorts.Model.TimedEvents
                 if (GameOver())
                     return;
 
+                SpawnRandomCart();
                 Thread.Sleep(_timeLeft);
                 SlowDownTime();
-                SpawnRandomCart();
                 CheckToSpawnShip();
                 MoveAllShips();
                 MoveAllCarts();
@@ -48,15 +48,15 @@ namespace Goudkoorts.Model.TimedEvents
         {
             if (_timeLeft < 500)
                 return;
-            _timeLeft = _timeLeft - 30;
+            _timeLeft = _timeLeft - 20;
         }
 
         private void MoveAllShips()
         {
-            foreach(Ship s in _main.GetAllShips())
+            foreach (Ship s in _main.GetAllShips())
             {
                 s.Move();
-                
+
             }
         }
 
@@ -72,7 +72,7 @@ namespace Goudkoorts.Model.TimedEvents
         {
             if (!_spawn)
             {
-                if (_random.Next(6) == 2)
+                if (_random.Next(4) == 2)
                 {
                     //If the integer is equal to 2, Spawn a cart. Else, keep waiting.
                     _spawn = true;
@@ -81,37 +81,39 @@ namespace Goudkoorts.Model.TimedEvents
             }
 
             int letter = _random.Next(1, 4);
-                if (_spawn)
+            if (_spawn)
+            {
+                switch (letter)
                 {
-                    switch (letter)
-                    {
-                        case 1:
-                            _main.AddCart(_main.GetWarehouse(Symbols.WarehouseA).SpawnCart());
-                            _spawn = false;
-                            break;
-                        case 2:
-                            _main.AddCart(_main.GetWarehouse(Symbols.WarehouseB).SpawnCart());
-                            _spawn = false;
-                            break;
-                        case 3:
-                            _spawn = false;
-                            _main.AddCart(_main.GetWarehouse(Symbols.WarehouseC).SpawnCart());
-                            break;
-                    }
+                    case 1:
+                        _main.AddCart(_main.GetWarehouse(Symbols.WarehouseA).SpawnCart());
+                        _spawn = false;
+                        break;
+                    case 2:
+                        _main.AddCart(_main.GetWarehouse(Symbols.WarehouseB).SpawnCart());
+                        _spawn = false;
+                        break;
+                    case 3:
+                        _spawn = false;
+                        _main.AddCart(_main.GetWarehouse(Symbols.WarehouseC).SpawnCart());
+                        break;
                 }
-         
+            }
+
         }
-            
+
 
         private void MoveAllCarts()
         {
-            foreach(Cart c in _main.GetAllCarts())
+            foreach (Cart c in _main.GetAllCarts())
             {
+                if (_main.EndOflevelLink == c.IsOnRail.Previous)
+                    _main.RemoveCart(c);
                 c.Move();
-                
             }
         }
-        private bool GameOver() {
+        private bool GameOver()
+        {
             foreach (Cart c in _main.GetAllCarts())
             {
                 if (c.GameOverChecks())
@@ -120,7 +122,6 @@ namespace Goudkoorts.Model.TimedEvents
                 }
 
             }
-
             return false;
         }
 

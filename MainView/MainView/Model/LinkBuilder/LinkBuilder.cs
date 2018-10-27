@@ -102,9 +102,8 @@ namespace Goudkoorts.Model.LinkBuilder
             }
             if (isSwitch)
                 _mainModel.GetSwitch(_currSwitch).OnHold = match;
-            else
-                obj.Above = match;
-            
+
+            obj.Above = match;
             match.Below = obj;
             _prevObj = obj;
         }

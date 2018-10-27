@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
 using Goudkoorts.ViewModel;
+using System;
 
 namespace Goudkoorts.Model
 {
     class MainModel
     {
-        public IRail EndOflevelLink { get; set; }
+        private IRail FinishRail;
         public bool IsLocked { get; set; }
 
         private Dictionary<int, ISwitchRail> _switches;
@@ -34,6 +35,20 @@ namespace Goudkoorts.Model
             _carts = new List<Cart>();
             _ships = new List<Ship>();
             _input = input;
+        }
+
+        public IRail EndOflevelLink
+        {
+            get
+            {
+                return FinishRail;
+            }
+            set
+            {
+                if (FinishRail != null)
+                    return;
+                FinishRail = value;
+            }
         }
 
         public void AddCart(Cart cart)
@@ -71,7 +86,7 @@ namespace Goudkoorts.Model
         {
             _lockdown = new Lockdown(main, input);
             _lockdown.Start();
-        }        
+        }
 
         public void AddSwitch(int pos, ISwitchRail obj)
         {
@@ -111,6 +126,11 @@ namespace Goudkoorts.Model
             foreach (Dock d in GetAllDocks())
                 amountOfShips++;
             return amountOfShips;
+        }
+
+        public void RemoveCart(Cart c)
+        {
+            _carts.Remove(c);
         }
 
         public Warehouse GetWarehouse(Symbols type)

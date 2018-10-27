@@ -35,6 +35,9 @@ namespace Goudkoorts.Model.MoveAbles
             var newDirection = (GetNextDirection(CameFrom));
             while (true)
             {
+                // went through all possible moves
+                if (newDirection.Equals(CameFrom))
+                    return;
 
                 if (IsOnRail is HoldingRail && IsOnRail.Next == null)
                     return;
@@ -42,9 +45,6 @@ namespace Goudkoorts.Model.MoveAbles
                 if (IsOnRail is HoldingRail && IsOnRail.Previous.ContainsMoveableObject is Cart)
                     return;
 
-                // went through all possible moves
-                if (newDirection.Equals(CameFrom))
-                    return;
 
                 if (!(_moveTo is EmptyRail) && _moveTo != null)
                     if (CheckForPossibleMove(newDirection))
@@ -84,21 +84,13 @@ namespace Goudkoorts.Model.MoveAbles
         }
         private bool CheckForPossibleMove(Direction newDirection)
         {
-            if (_moveTo is ISwitchRail)
-                if (_moveTo.IsOnHold(_currentRail))
-                    return false;
-                else if (_currentRail.IsOnHold(_moveTo))
-                    return false;
-                else
-                {
-                    MoveCart(newDirection);
-                    return true;
-                }
-
+            if (MoveToSwitch(newDirection))
+                return true;
             if (_moveTo is NormalRail)
             {
-                MoveCart(newDirection);
-                return true;
+                if (!MoveIsOnHold(newDirection))
+                    return true;
+                return false;
             }
             if (_moveTo is HoldingRail)
             {
@@ -111,6 +103,36 @@ namespace Goudkoorts.Model.MoveAbles
                 Type = (char)Symbols.EmptyCart;
                 return true;
             }
+            return false;
+        }
+
+        private bool MoveIsOnHold(Direction newDirection)
+        {
+            if (_currentRail is ISwitchRail)
+                if (_currentRail.IsOnHold(_moveTo))
+                    return true;
+                else
+                {
+                    MoveCart(newDirection);
+                    return false;
+                }
+            else
+            {
+                MoveCart(newDirection);
+                return false;
+            }
+        }
+
+        private bool MoveToSwitch(Direction newDirection)
+        {
+            if (_moveTo is ISwitchRail)
+                if (_moveTo.IsOnHold(_currentRail))
+                    return false;
+                else
+                {
+                    MoveCart(newDirection);
+                    return true;
+                }
             return false;
         }
 
