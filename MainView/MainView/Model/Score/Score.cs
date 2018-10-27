@@ -6,7 +6,23 @@ using System.Threading.Tasks;
 
 namespace Goudkoorts.Model.Score
 {
-    class Score
+    public class Score
     {
+        private int _score;
+
+        public Score()
+        {
+            _score = 0;
+        }
+
+        public int GetScore()
+        {
+            return _score;
+        }
+
+        public void SetScore(int amount)
+        {
+            _score = _score + amount;
+        }
     }
 }

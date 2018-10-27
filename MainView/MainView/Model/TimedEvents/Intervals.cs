@@ -1,12 +1,10 @@
 ﻿using Goudkoorts.Enum;
 using Goudkoorts.Model.MoveAbles;
+using Goudkoorts.Model.Rails;
 using Goudkoorts.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Goudkoorts.Model.TimedEvents
 {
@@ -14,15 +12,17 @@ namespace Goudkoorts.Model.TimedEvents
     {
         private MainModel _main;
         private InputViewVM _input;
+        private Score.Score _score;
         private Random _random;
-        private readonly int _time = 2000;
+        private readonly int _time = 500;
         private int _timeLeft;
         private bool _spawn = false;
 
-        public Intervals(MainModel main, InputViewVM input)
+        public Intervals(MainModel main, InputViewVM input, Score.Score score)
         {
             this._main = main;
             this._input = input;
+            this._score = score;
             _random = new Random();
             _timeLeft = _time;
         }
@@ -56,8 +56,13 @@ namespace Goudkoorts.Model.TimedEvents
         {
             foreach (Ship s in _main.GetAllShips())
             {
+                if(s.IsOnRail is Dock)
+                {
+                    Dock d = (Dock)s.IsOnRail;
+                    if(d.Score == 8)
+                        _score.SetScore(10);
+                }
                 s.Move();
-
             }
         }
 
@@ -100,7 +105,6 @@ namespace Goudkoorts.Model.TimedEvents
                         break;
                 }
             }
-
         }
 
 
@@ -108,8 +112,12 @@ namespace Goudkoorts.Model.TimedEvents
         {
             foreach (Cart c in _main.GetAllCarts())
             {
-                if (_main.EndOflevelLink == c.IsOnRail.Previous)
-                    _main.RemoveCart(c);
+                if(c.IsOnRail.Previous is Dock)
+                {
+                    Dock d = (Dock)c.IsOnRail.Previous;
+                    if (d.ContainsShip != null)
+                        _score.SetScore(1);
+                }
                 c.Move();
             }
         }

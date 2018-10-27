@@ -19,8 +19,6 @@ namespace Goudkoorts.Model.Rails
         private bool Locked;
         private Random _random;
 
-        private int _amount { get; set; }
-
         public Dock(Symbols type)
         {
             TypeOfRail = (char)type;
@@ -37,6 +35,8 @@ namespace Goudkoorts.Model.Rails
         public IMoveableObject ContainsShip { get; set; }
 
         public bool IsLocked { get { return Locked; } set { Locked = value; } }
+
+        public int Score { get; private set; }
 
         public bool IsOnHold(IRail obj)
         {
@@ -84,20 +84,19 @@ namespace Goudkoorts.Model.Rails
 
         public void UpdateShip()
         {
-            _amount++;
-            if (_amount == 8)
+            Score++;
+            if (Score == 8)
             {
-                // TODO: update score
                 this.ContainsShip = null;
             }
-            this.Above.Type = char.Parse(_amount.ToString());
+            this.Above.Type = char.Parse(Score.ToString());
         }
 
         public void SetSideIcons()
         {
             this.Above.Next.Type = (char)Symbols.ShipRight;
             this.Above.Previous.Type = (char)Symbols.ShipLeft;
-            this.Above.Type = char.Parse(_amount.ToString());
+            this.Above.Type = char.Parse(Score.ToString());
         }
     }
 }
