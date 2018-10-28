@@ -64,6 +64,7 @@ namespace Goudkoorts.Model.MoveAbles
 
         public bool GameOverChecks()
         {
+            return false;
             //Rangrail colission
             if (IsOnRail.Previous.ContainsMoveableObject is Cart && IsOnRail.Previous is HoldingRail && !(IsOnRail is HoldingRail))
             {

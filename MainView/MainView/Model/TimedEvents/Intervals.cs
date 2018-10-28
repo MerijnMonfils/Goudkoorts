@@ -14,7 +14,7 @@ namespace Goudkoorts.Model.TimedEvents
         private InputViewVM _input;
         private Score.Score _score;
         private Random _random;
-        private readonly int _time = 2000;
+        private readonly int _time = 500;
         private int _timeLeft;
         private bool _spawn = false;
 
@@ -33,13 +33,13 @@ namespace Goudkoorts.Model.TimedEvents
             {
 
                 Thread.Sleep(_timeLeft);
+                if (GameOver())
+                    _input.DrawGameOver(_main);
                 SpawnRandomCart();
                 SlowDownTime();
                 CheckToSpawnShip();
                 MoveAllShips();
                 MoveAllCarts();
-                if (GameOver())
-                    _input.DrawGameOver(_main);
                 _input.Redraw(_main);
             }
         }
@@ -53,6 +53,7 @@ namespace Goudkoorts.Model.TimedEvents
 
         private void MoveAllShips()
         {
+            Ship destroy = null;
             foreach (Ship s in _main.GetAllShips())
             {
                 if (s.IsOnRail is Dock)
@@ -64,9 +65,11 @@ namespace Goudkoorts.Model.TimedEvents
                 s.Move();
                 if (s.CheckForDestroy())
                 {
-                    _main.RemoveShip(s);
+                    destroy = s;
                 }
             }
+            if (destroy != null)
+                _main.RemoveShip(destroy);
         }
 
         private void CheckToSpawnShip()
@@ -113,6 +116,7 @@ namespace Goudkoorts.Model.TimedEvents
 
         private void MoveAllCarts()
         {
+            Cart destroy = null;
             foreach (Cart c in _main.GetAllCarts())
             {
                 if (c.IsOnRail.Previous is Dock)
@@ -123,7 +127,13 @@ namespace Goudkoorts.Model.TimedEvents
                 }
                 c.Move();
                 if (c.CheckForDestroy())
-                    _main.RemoveCart(c);
+                {
+                    destroy = c;
+                }
+            }
+            if (destroy != null)
+            {
+                _main.RemoveCart(destroy);
             }
         }
 

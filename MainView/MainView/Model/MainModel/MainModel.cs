@@ -15,7 +15,7 @@ namespace Goudkoorts.Model
     {
         public IRail EndOflevelLink { get; set; }
         public bool IsLocked { get; set; }
-
+        
         private Dictionary<int, ISwitchRail> _switches;
         private Dictionary<Symbols, Warehouse> _warehouses;
         private List<Dock> _docks;
